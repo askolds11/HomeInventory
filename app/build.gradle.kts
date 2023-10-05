@@ -59,17 +59,25 @@ android {
 }
 
 dependencies {
+    val lifecycle_version = "2.6.2"
+    val compose_bom_version = "2023.09.02"
+
+
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation(platform("androidx.compose:compose-bom:2023.09.02"))
+
+    // Compose
+    implementation(platform("androidx.compose:compose-bom:$compose_bom_version"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
 
     // debug
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -82,6 +90,6 @@ dependencies {
     // androidTest
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.09.02"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:$compose_bom_version"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 }
