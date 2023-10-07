@@ -1,6 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
+    // Hilt
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -56,16 +60,28 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    // Kapt
+    // Running kapt tasks in parallel
+    tasks.withType<org.jetbrains.kotlin.gradle.internal.KaptWithoutKotlincTask>()
+        .configureEach {
+            kaptProcessJvmArgs.add("-Xmx512m")
+        }
 }
 
 dependencies {
     val lifecycle_version = "2.6.2"
     val compose_bom_version = "2023.09.02"
 
-
+    val hilt_version = "2.48.1"
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
     implementation("androidx.core:core-ktx:1.12.0")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+
 
     // Compose
     implementation(platform("androidx.compose:compose-bom:$compose_bom_version"))
@@ -74,7 +90,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.navigation:navigation-compose:2.7.4")
+
+    implementation("androidx.activity:activity-compose:1.8.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
@@ -92,4 +110,13 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:$compose_bom_version"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+
+    // androidTest Hilt
+    androidTestImplementation ("com.google.dagger:hilt-android-testing:$hilt_version")
+    kaptAndroidTest("com.google.dagger:hilt-compiler:$hilt_version")
+}
+
+// Hilt
+kapt {
+    correctErrorTypes = true
 }
