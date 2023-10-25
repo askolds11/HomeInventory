@@ -1,10 +1,8 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-
-    // Hilt
-    kotlin("kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -39,6 +37,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -60,63 +59,55 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
-    // Kapt
-    // Running kapt tasks in parallel
-    tasks.withType<org.jetbrains.kotlin.gradle.internal.KaptWithoutKotlincTask>()
-        .configureEach {
-            kaptProcessJvmArgs.add("-Xmx512m")
-        }
 }
 
 dependencies {
-    val lifecycle_version = "2.6.2"
-    val compose_bom_version = "2023.09.02"
-
-    val hilt_version = "2.48.1"
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
-
-    implementation("androidx.core:core-ktx:1.12.0")
+    coreLibraryDesugaring(libs.desugar)
+    implementation(libs.core.ktx)
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+
+    androidTestImplementation (libs.hilt.testing)
+    kspAndroidTest(libs.hilt.compiler)
 
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:$compose_bom_version"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation(platform(compose.bom))
+    implementation(compose.foundation)
+    implementation(compose.ui)
+    implementation(compose.ui.graphics)
+    implementation(compose.ui.tooling.preview)
 
-    implementation("androidx.navigation:navigation-compose:2.7.4")
+    implementation(compose.material3)
+    implementation(compose.material.icons)
 
-    implementation("androidx.activity:activity-compose:1.8.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    debugImplementation(compose.ui.tooling)
+    debugImplementation(compose.ui.test.manifest)
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    androidTestImplementation(platform(compose.bom))
+    androidTestImplementation(compose.ui.test.junit4)
 
-    // debug
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(compose.navigation)
+
+    //
+
+    implementation(libs.activity.compose)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.runtime.ktx)
+
+
 
 
     // test
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.junit)
 
     // androidTest
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:$compose_bom_version"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 
-    // androidTest Hilt
-    androidTestImplementation ("com.google.dagger:hilt-android-testing:$hilt_version")
-    kaptAndroidTest("com.google.dagger:hilt-compiler:$hilt_version")
-}
 
-// Hilt
-kapt {
-    correctErrorTypes = true
+
+
 }

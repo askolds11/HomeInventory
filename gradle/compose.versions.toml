@@ -1,0 +1,20 @@
+[versions]
+bom = "2023.10.01"
+navigation = "2.7.4"
+
+
+[libraries]
+bom = { group = "androidx.compose", name = "compose-bom", version.ref = "bom" }
+foundation = { module = "androidx.compose.foundation:foundation" }
+
+ui = { module = "androidx.compose.ui:ui" }
+ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+
+material3 = { module = "androidx.compose.material3:material3" }
+material-icons = { module = "androidx.compose.material:material-icons-extended" }
+
+navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
