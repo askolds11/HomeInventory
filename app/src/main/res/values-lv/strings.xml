@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Mājas inventārs</string>
+    <string name="homes">Mājas</string>
+    <string name="recents">Nesenie</string>
 </resources>
