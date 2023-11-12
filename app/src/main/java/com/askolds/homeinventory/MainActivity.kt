@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.askolds.homeinventory.ui.navigation.Navigation
+import com.askolds.homeinventory.ui.navigation.composables.Navigation
 import com.askolds.homeinventory.ui.theme.HomeInventoryTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -2,4 +2,22 @@
     <string name="app_name">Mājas inventārs</string>
     <string name="homes">Mājas</string>
     <string name="recents">Nesenie</string>
+
+    <string name="save">Saglabāt</string>
+
+<!--region Generic validation-->
+<!--    Lietot Laravel, kad iespējams un loģiski-->
+<!--    https://github.com/Laravel-Lang-->
+<!--    https://github.com/Laravel-Lang/lang/blob/main/locales/lv/php.json-->
+    <string name="validation_required">%s lauks ir obligāts.</string>
+<!--endregion Generic validation-->
+
+<!--region Generic field names-->
+
+<!--endregion Generic field names-->
+
+<!--region Home-->
+    <string name="home_name">Nosaukums</string>
+    <string name="home_validation_alreadyexists">Vērtība jau eksistē!</string>
+<!--endregion Home-->
 </resources>

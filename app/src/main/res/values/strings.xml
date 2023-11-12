@@ -2,5 +2,23 @@
     <string name="app_name">Home Inventory</string>
     <string name="homes">Homes</string>
     <string name="recents">Recents</string>
-    <string name="crash">Crash!</string>
+
+    <string name="save">Save</string>
+
+<!--region Generic validation-->
+<!--    Use Laravel ones when possible and logical-->
+<!--    https://github.com/Laravel-Lang-->
+<!--    https://github.com/Laravel-Lang/lang/blob/main/locales/en/php.json-->
+    <string name="validation_required">The %s field is required.</string>
+<!--endregion Generic validation-->
+
+<!--region Generic field names-->
+
+<!--endregion Generic field names-->
+
+<!--region Home-->
+    <string name="home_name">Name</string>
+    <string name="home_validation_alreadyexists">This value already exists!</string>
+<!--endregion Home-->
+
 </resources>
