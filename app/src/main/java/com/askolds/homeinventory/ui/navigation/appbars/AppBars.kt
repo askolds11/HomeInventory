@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -45,7 +44,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlin.math.abs
@@ -65,12 +63,11 @@ fun CustomNavigationBar(
     contentColor: Color = MaterialTheme.colorScheme.contentColorFor(containerColor),
     tonalElevation: Dp = NavigationBarDefaults.Elevation,
     windowInsets: WindowInsets = NavigationBarDefaults.windowInsets,
-    scrollBehavior: AppBarsScrollBehavior? = null,
+    appBarsObject: AppBarsObject,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val appBarsViewModel: AppBarsViewModel = hiltViewModel()
     val navBar = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
-    appBarsViewModel.appBarsState.SetBottomPadding(padding = 80.dp + navBar)
+    appBarsObject.appBarsState.SetBottomPadding(padding = 80.dp + navBar)
     NavigationBar(
         modifier
             .layout { measurable, constraints ->
@@ -80,7 +77,7 @@ fun CustomNavigationBar(
                 //ContainerHeight.toPx()
 
             val placeable = measurable.measure(constraints)
-            val height = placeable.height + (scrollBehavior?.bottomBarState?.heightOffset ?: 0f)
+            val height = placeable.height + (appBarsObject.scrollBehavior.bottomBarState.heightOffset)
             layout(placeable.width, height.roundToInt()) {
                 placeable.place(0, 0)
             }
@@ -111,14 +108,13 @@ fun CustomSearchBar(
     tonalElevation: Dp = SearchBarDefaults.Elevation,
     windowInsets: WindowInsets = SearchBarDefaults.windowInsets,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    scrollBehavior: AppBarsScrollBehavior? = null,
+    appBarsObject: AppBarsObject,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val appBarsViewModel: AppBarsViewModel = hiltViewModel()
-    val height = scrollBehavior?.topBarState?.heightOffset ?: 0f
+    val height = appBarsObject.scrollBehavior.topBarState.heightOffset
     val heightDp = with(LocalDensity.current) { height.toDp() }
     val statusBar = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
-    appBarsViewModel.appBarsState.SetTopPadding(padding = 64.dp + statusBar)
+    appBarsObject.appBarsState.SetTopPadding(padding = 64.dp + statusBar)
 
     SearchBar(
         query,

@@ -13,21 +13,21 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsScrollBehavior
+import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.ui.navigation.appbars.CustomNavigationBar
 
 @Composable
-fun BottomBar(navController: NavController, scrollBehavior: AppBarsScrollBehavior) {
+fun BottomBar(navController: NavController, appBarsObject: AppBarsObject) {
     BottomBarContent(
         navController,
-        scrollBehavior
+        appBarsObject
     )
 }
 
 @Composable
 fun BottomBarContent(
     navController: NavController,
-    scrollBehavior: AppBarsScrollBehavior,
+    appBarsObject: AppBarsObject,
     modifier: Modifier = Modifier
 ) {
     val items = remember {
@@ -40,7 +40,7 @@ fun BottomBarContent(
 
     CustomNavigationBar(
         tonalElevation = 0.dp,
-        scrollBehavior = scrollBehavior,
+        appBarsObject = appBarsObject,
         modifier = modifier
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()

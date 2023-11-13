@@ -19,54 +19,15 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.askolds.homeinventory.featureHome.ui.NavigationHome
-import com.askolds.homeinventory.featureHome.ui.list.HomeListViewModel
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsScrollBehavior
+import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.ui.navigation.appbars.CustomSearchBar
 
-@Composable
-fun TopBar(navController: NavController, scrollBehavior: AppBarsScrollBehavior) {
-    TopBarContent(
-        navController,
-        scrollBehavior
-    )
-}
-
-@Composable
-fun TopBarContent(
-    navController: NavController,
-    scrollBehavior: AppBarsScrollBehavior,
-    modifier: Modifier = Modifier
-) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-
-    when (currentDestination?.route) {
-        NavigationHome.List.route -> {
-            val parentEntry = remember(navBackStackEntry) {
-                navController.getBackStackEntry(NavigationHome.List.route)
-            }
-            val homeListViewModel = hiltViewModel<HomeListViewModel>(parentEntry)
-            SearchBar(
-                homeListViewModel.query,
-                homeListViewModel::search,
-                scrollBehavior
-            )
-        }
-    }
-
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    scrollBehavior: AppBarsScrollBehavior
+    appBarsObject: AppBarsObject,
 ) {
     var isFocused by remember {
         mutableStateOf(false)
@@ -77,11 +38,11 @@ fun SearchBar(
 
     CustomSearchBar(
         query = query,
-        onQueryChange = { onQueryChange(it) },
+        onQueryChange = onQueryChange,
         onSearch = { },
         active = false,
         onActiveChange = { },
-        scrollBehavior = scrollBehavior,
+        appBarsObject = appBarsObject,
         modifier = Modifier
             .padding(horizontal = 8.dp)
             .fillMaxWidth()

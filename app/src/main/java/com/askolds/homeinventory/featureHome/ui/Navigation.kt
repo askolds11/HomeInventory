@@ -1,7 +1,5 @@
 package com.askolds.homeinventory.featureHome.ui
 
-import android.util.Log
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -16,7 +14,7 @@ import com.askolds.homeinventory.featureHome.ui.home.HomeScreen
 import com.askolds.homeinventory.featureHome.ui.home.HomeViewModel
 import com.askolds.homeinventory.featureHome.ui.list.HomeListScreen
 import com.askolds.homeinventory.featureHome.ui.list.HomeListViewModel
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsViewModel
+import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.ui.navigation.composables.NavigationBase
 import com.askolds.homeinventory.ui.navigation.defaultEnterTransition
 import com.askolds.homeinventory.ui.navigation.defaultExitTransition
@@ -31,9 +29,10 @@ sealed class NavigationHome(val route: String, val args: String? = null) {
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
-    appBarsViewModel: AppBarsViewModel,
+    appBarsObject: AppBarsObject,
     modifier: Modifier = Modifier,
 ) {
+    val appBarsState = appBarsObject.appBarsState
     navigation(startDestination = NavigationHome.List.route, route = NavigationBase.Home.route) {
         composable(
             route = NavigationHome.List.route,
@@ -41,15 +40,20 @@ fun NavGraphBuilder.homeGraph(
             exitTransition = { defaultExitTransition(this) }
         ) {
 
-            appBarsViewModel.appBarsState.ShowAppBars(lockTop = false, lockBottom = false)
-            HomeListScreen(hiltViewModel<HomeListViewModel>(), navController, modifier)
+            appBarsState.ShowAppBars(lockTop = false, lockBottom = false)
+            HomeListScreen(
+                hiltViewModel<HomeListViewModel>(key = "test"),
+                navController,
+                appBarsObject,
+                modifier
+            )
         }
         composable(
             route = NavigationHome.Create.route,
            enterTransition = { defaultEnterTransition(this) },
             exitTransition = { defaultExitTransition(this) }
         ) {
-            appBarsViewModel.appBarsState.ShowAppBars(lockTop = true, lockBottom = true)
+            appBarsState.ShowAppBars(lockTop = true, lockBottom = true)
             HomeCreateScreen(hiltViewModel<HomeCreateViewModel>(), navController)
         }
         composable(
@@ -58,7 +62,7 @@ fun NavGraphBuilder.homeGraph(
             enterTransition = { defaultEnterTransition(this) },
             exitTransition = { defaultExitTransition(this) }
         ) {
-            appBarsViewModel.appBarsState.HideAppBars(lockTop = true, lockBottom = true)
+            appBarsState.HideAppBars(lockTop = true, lockBottom = true)
             HomeScreen(hiltViewModel<HomeViewModel>(), navController)
         }
     }

@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.askolds.homeinventory.R
 import com.askolds.homeinventory.featureHome.ui.homeGraph
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsDefaults
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsViewModel
+import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.ui.recents.RecentsScreen
 
 sealed class NavigationBase(
@@ -49,19 +48,17 @@ sealed class NavigationBase(
 @Composable
 fun Navigation(
     navController: NavHostController = rememberNavController(),
+    appBarsObject: AppBarsObject
 ) {
-    val appBarsViewModel: AppBarsViewModel = hiltViewModel()
-
+    val appBarsState = appBarsObject.appBarsState
     val scrollBehavior = AppBarsDefaults.exitAlwaysScrollBehavior(
-        bottomBarState = appBarsViewModel.appBarsState.bottomBarState,
-        topBarState = appBarsViewModel.appBarsState.topBarState,
-        canBottomScroll = { appBarsViewModel.appBarsState.canBottomScroll },
-        canTopScroll = { appBarsViewModel.appBarsState.canTopScroll }
+        bottomBarState = appBarsState.bottomBarState,
+        topBarState = appBarsState.topBarState,
+        canBottomScroll = { appBarsState.canBottomScroll },
+        canTopScroll = { appBarsState.canTopScroll }
     )
     Scaffold(
-        topBar = { TopBar(navController, scrollBehavior) },
-        floatingActionButton = { FAB(navController) },
-        bottomBar = { BottomBar(navController, scrollBehavior) },
+        bottomBar = { BottomBar(navController, appBarsObject) },
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
 
@@ -72,7 +69,7 @@ fun Navigation(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            homeGraph(navController, appBarsViewModel)
+            homeGraph(navController, appBarsObject)
             composable(route = NavigationBase.Recents.route) {
                 RecentsScreen(navController)
             }

@@ -2,7 +2,6 @@ package com.askolds.homeinventory.ui.navigation.appbars
 
 import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.animateTo
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,7 +11,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,13 +21,12 @@ class AppBarsState @Inject constructor(
     @Named("topBarState") val topBarState: AppBarState,
     @Named("bottomBarState") val bottomBarState: AppBarState
 ) {
-    var searchString by mutableStateOf("")
     var bottomPadding by mutableStateOf(0.dp)
         private set
     var bottomPaddingPx by mutableFloatStateOf(0f)
         private set
     val bottomPaddingInt
-        get() =  bottomPaddingPx.roundToInt()
+        get() = bottomPaddingPx.roundToInt()
     var topPadding by mutableStateOf(0.dp)
         private set
     var topPaddingPx by mutableFloatStateOf(0f)
@@ -71,36 +68,32 @@ class AppBarsState @Inject constructor(
 
     @Composable
     fun ShowBottomBar(lock: Boolean) {
-        val appBarsViewModel: AppBarsViewModel = hiltViewModel()
-        val appBarsState = appBarsViewModel.appBarsState
         LaunchedEffect(Unit) {
             coroutineScope {
                 launch {
-                    val state =  appBarsState.bottomBarState
+                    val state = bottomBarState
                     AnimationState(initialValue = state.heightOffset).animateTo(
                         0f,
                     ) { state.heightOffset = value }
                 }
             }
+            canBottomScroll = !lock
         }
-        appBarsState.canBottomScroll = !lock
     }
 
     @Composable
     fun ShowTopBar(lock: Boolean) {
-        val appBarsViewModel: AppBarsViewModel = hiltViewModel()
-        val appBarsState = appBarsViewModel.appBarsState
         LaunchedEffect(Unit) {
             coroutineScope {
                 launch {
-                    val state =  appBarsState.topBarState
+                    val state = topBarState
                     AnimationState(initialValue = state.heightOffset).animateTo(
                         0f,
                     ) { state.heightOffset = value }
                 }
             }
+            canTopScroll = !lock
         }
-        appBarsState.canTopScroll = !lock
     }
 
     @Composable
@@ -111,36 +104,32 @@ class AppBarsState @Inject constructor(
 
     @Composable
     fun HideBottomBar(lock: Boolean) {
-        val appBarsViewModel: AppBarsViewModel = hiltViewModel()
-        val appBarsState = appBarsViewModel.appBarsState
         LaunchedEffect(Unit) {
             coroutineScope {
                 launch {
-                    val state =  appBarsState.bottomBarState
+                    val state = bottomBarState
                     AnimationState(initialValue = state.heightOffset).animateTo(
                         state.heightOffsetLimit,
                     ) { state.heightOffset = value }
                 }
             }
+            canBottomScroll = !lock
         }
-        appBarsState.canBottomScroll = !lock
     }
 
     @Composable
     fun HideTopBar(lock: Boolean) {
-        val appBarsViewModel: AppBarsViewModel = hiltViewModel()
-        val appBarsState = appBarsViewModel.appBarsState
         LaunchedEffect(Unit) {
             coroutineScope {
                 launch {
-                    val state =  appBarsState.topBarState
+                    val state = topBarState
                     AnimationState(initialValue = state.heightOffset).animateTo(
                         state.heightOffsetLimit,
                     ) { state.heightOffset = value }
                 }
             }
+            canTopScroll = !lock
         }
-        appBarsState.canTopScroll = !lock
     }
 
     // TODO: Functions for showing, hiding, setting paddings

@@ -19,7 +19,7 @@ fun defaultEnterTransition(context: AnimatedContentTransitionScope<NavBackStackE
             DURATION, easing = LinearEasing
         )
     ) + context.slideIntoContainer(
-        animationSpec = tween(DURATION, easing = EaseIn),
+        animationSpec = tween(DURATION),
         towards = AnimatedContentTransitionScope.SlideDirection.Start
     )
 
@@ -31,7 +31,7 @@ fun defaultExitTransition(context: AnimatedContentTransitionScope<NavBackStackEn
             DURATION, easing = LinearEasing
         )
     ) + context.slideOutOfContainer(
-        animationSpec = tween(DURATION, easing = EaseOut),
+        animationSpec = tween(DURATION),
         towards = AnimatedContentTransitionScope.SlideDirection.Start
     )
 
