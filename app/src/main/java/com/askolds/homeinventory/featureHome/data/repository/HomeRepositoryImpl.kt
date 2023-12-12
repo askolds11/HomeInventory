@@ -11,12 +11,20 @@ class HomeRepositoryImpl(
         return dao.getList()
     }
 
-    override suspend fun insert(home: HomeEntity) {
-        dao.insert(home)
+    override suspend fun insert(home: HomeEntity): Int {
+        return dao.insert(home).toInt()
+    }
+
+    override suspend fun update(home: HomeEntity) {
+        dao.update(home)
     }
 
     override suspend fun getById(id: Int): HomeEntity? {
         return dao.getById(id)
+    }
+
+    override fun getFlowById(id: Int): Flow<HomeEntity> {
+        return dao.getFlowById(id)
     }
 
     override suspend fun nameExists(name: String, excludeName: String?): Boolean {
@@ -25,5 +33,13 @@ class HomeRepositoryImpl(
 
     override fun search(name: String): Flow<List<HomeEntity>> {
         return dao.search(name)
+    }
+
+    override suspend fun deleteByIds(ids: List<Int>) {
+        dao.deleteByIds(ids)
+    }
+
+    override suspend fun getImageIdsByIds(ids: List<Int>): List<Int?> {
+        return dao.getImageIdsByIds(ids)
     }
 }

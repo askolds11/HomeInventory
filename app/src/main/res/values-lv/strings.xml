@@ -20,4 +20,8 @@
     <string name="home_name">Nosaukums</string>
     <string name="home_validation_alreadyexists">Vērtība jau eksistē!</string>
 <!--endregion Home-->
+
+<!--region Thing-->
+    <string name="thing_name">Nosaukums</string>
+<!--endregion Thing-->
 </resources>

@@ -3,6 +3,8 @@ package com.askolds.homeinventory.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.systemGestures
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -12,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.view.WindowCompat
 
 private val LightColorTheme = lightColorScheme(
@@ -98,10 +102,20 @@ fun HomeInventoryTheme(
     }
 
     val view = LocalView.current
+    val systemGestureInsets = WindowInsets.systemGestures
+        .getLeft(LocalDensity.current, layoutDirection = LayoutDirection.Ltr)
     if (!view.isInEditMode) {
         SideEffect {
+            var isGestures = false
+            // make nav bar transparent, if it is gesture pill
+            // it is gesture pill if system gesture left or right inset is > 0
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                isGestures = systemGestureInsets > 0
+            }
             val window = (view.context as Activity).window
-            window.navigationBarColor = colorScheme.background.copy(alpha = 0.75f).toArgb()
+            window.navigationBarColor = colorScheme.background.copy(
+                alpha = if (isGestures) 0f else 0.75f
+            ).toArgb()
             window.statusBarColor = colorScheme.background.copy(alpha = 0.75f).toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
             WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !darkTheme

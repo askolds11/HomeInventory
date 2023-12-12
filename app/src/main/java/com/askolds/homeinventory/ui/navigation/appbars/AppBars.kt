@@ -23,6 +23,10 @@ import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -67,6 +71,7 @@ fun CustomNavigationBar(
     content: @Composable RowScope.() -> Unit,
 ) {
     val navBar = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    //80.dp as per material design, stored in an auto generated private class :)
     appBarsObject.appBarsState.SetBottomPadding(padding = 80.dp + navBar)
     NavigationBar(
         modifier
@@ -114,6 +119,7 @@ fun CustomSearchBar(
     val height = appBarsObject.scrollBehavior.topBarState.heightOffset
     val heightDp = with(LocalDensity.current) { height.toDp() }
     val statusBar = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+    //64.dp as per material design, stored in an auto generated private class :)
     appBarsObject.appBarsState.SetTopPadding(padding = 64.dp + statusBar)
 
     SearchBar(
@@ -123,7 +129,7 @@ fun CustomSearchBar(
         active,
         onActiveChange,
         modifier
-            .offset(x = 0.dp, y = heightDp),
+            .offset(x = 0.dp, y = heightDp), // offset outside screen
         enabled,
         placeholder,
         leadingIcon,
@@ -134,6 +140,36 @@ fun CustomSearchBar(
         windowInsets,
         interactionSource,
         content
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomTopAppBar(
+    title: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    navigationIcon: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    appBarsObject: AppBarsObject,
+) {
+    val height = appBarsObject.scrollBehavior.topBarState.heightOffset
+    val heightDp = with(LocalDensity.current) { height.toDp() }
+    val statusBar = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+    //64.dp as per material design, stored in an auto generated private class :)
+    appBarsObject.appBarsState.SetTopPadding(padding = 64.dp + statusBar)
+
+    TopAppBar(
+        title,
+        modifier
+            .offset(x = 0.dp, y = heightDp), // offset outside screen
+        navigationIcon,
+        actions,
+        windowInsets,
+        colors,
+        scrollBehavior
     )
 }
 

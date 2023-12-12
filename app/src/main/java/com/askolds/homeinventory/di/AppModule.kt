@@ -3,13 +3,8 @@ package com.askolds.homeinventory.di
 import android.content.Context
 import androidx.room.Room
 import com.askolds.homeinventory.data.Database
-import com.askolds.homeinventory.featureHome.data.repository.HomeRepository
-import com.askolds.homeinventory.featureHome.data.repository.HomeRepositoryImpl
-import com.askolds.homeinventory.featureHome.domain.usecase.Add
-import com.askolds.homeinventory.featureHome.domain.usecase.GetList
-import com.askolds.homeinventory.featureHome.domain.usecase.HomeUseCases
-import com.askolds.homeinventory.featureHome.domain.usecase.Search
-import com.askolds.homeinventory.featureHome.domain.usecase.validation.ValidateName
+import com.askolds.homeinventory.featureHome.domain.usecase.*
+import com.askolds.homeinventory.featureThing.domain.usecase.*
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarState
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsState
 import dagger.Module
@@ -57,19 +52,4 @@ object AppModule {
         @Named("topBarState") topBarState: AppBarState,
         @Named("bottomBarState") bottomBarState: AppBarState
     ): AppBarsState = AppBarsState(topBarState, bottomBarState)
-
-    @Provides
-    @Singleton
-    fun provideHomeRepository(database: Database): HomeRepository = HomeRepositoryImpl(
-        database.homeDao()
-    )
-
-    @Provides
-    @Singleton
-    fun provideHomeUseCases(repository: HomeRepository): HomeUseCases  = HomeUseCases(
-        getList = GetList(repository),
-        add = Add(repository),
-        validateName = ValidateName(repository),
-        search = Search(repository)
-    )
 }

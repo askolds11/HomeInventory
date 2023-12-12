@@ -4,6 +4,7 @@ import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.animateTo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -34,16 +35,13 @@ class AppBarsState @Inject constructor(
     val topPaddingInt
         get() = topPaddingPx.roundToInt()
 
-    var resetBottomPadding by mutableStateOf(false)
-    var resetTopPadding by mutableStateOf(false)
-
     var canBottomScroll by mutableStateOf(true)
     var canTopScroll by mutableStateOf(true)
 
     @Composable
     fun SetBottomPadding(padding: Dp) {
         val localDensity = LocalDensity.current
-        LaunchedEffect(Unit) {
+        SideEffect {
             bottomPadding = padding
             bottomPaddingPx = with(localDensity) { padding.toPx() }
             bottomBarState.heightOffsetLimit = -bottomPaddingPx
@@ -53,7 +51,7 @@ class AppBarsState @Inject constructor(
     @Composable
     fun SetTopPadding(padding: Dp) {
         val localDensity = LocalDensity.current
-        LaunchedEffect(Unit) {
+        SideEffect {
             topPadding = padding
             topPaddingPx = with(localDensity) { padding.toPx() }
             topBarState.heightOffsetLimit = -topPaddingPx

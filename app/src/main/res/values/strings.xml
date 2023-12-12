@@ -13,12 +13,15 @@
 <!--endregion Generic validation-->
 
 <!--region Generic field names-->
-
 <!--endregion Generic field names-->
 
 <!--region Home-->
     <string name="home_name">Name</string>
     <string name="home_validation_alreadyexists">This value already exists!</string>
 <!--endregion Home-->
+
+<!--region Thing-->
+    <string name="thing_name">Name</string>
+<!--endregion Thing-->
 
 </resources>
