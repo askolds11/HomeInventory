@@ -10,21 +10,21 @@ import com.askolds.homeinventory.featureImage.data.model.ImageEntity
     tableName = "parameter_set_parameter",
     foreignKeys = [
         ForeignKey(
-            entity = ImageEntity::class,
+            entity = ParameterEntity::class,
             parentColumns = ["id"],
-            childColumns = ["imageId"],
+            childColumns = ["parameterId"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = ImageEntity::class,
+            entity = ParameterSetEntity::class,
             parentColumns = ["id"],
-            childColumns = ["imageId"],
+            childColumns = ["parameterSetId"],
             onDelete = ForeignKey.CASCADE
         ),
     ],
     indices = [
-        Index("searchName"),
-        Index("imageId")
+        Index("parameterId"),
+        Index("parameterSetId")
     ]
 )
 data class ParameterSetParameterEntity (

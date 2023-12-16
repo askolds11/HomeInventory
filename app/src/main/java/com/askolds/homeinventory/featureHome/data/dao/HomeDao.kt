@@ -51,5 +51,5 @@ interface HomeDao {
     @Query("""
         SELECT imageId FROM home WHERE id IN (:ids)
     """)
-    suspend fun getImageIdsByIds(ids: List<Int>): List<Int?>
+    suspend fun getImageIdsByIds(ids: List<Int>): List<Int>
 }
