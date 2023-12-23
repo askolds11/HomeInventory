@@ -16,9 +16,12 @@ interface ParameterDao {
     @Update
     suspend fun update(parameter: ParameterEntity)
 
-    @Query("""
+    @Query(
+        """
         SELECT * FROM parameter
-        ORDER BY LOWER(name), name""")
+        ORDER BY LOWER(name), name
+        """
+    )
     fun getList(): Flow<List<ParameterEntity>>
 
     @Query("SELECT * FROM parameter WHERE id = :id")
@@ -27,16 +30,36 @@ interface ParameterDao {
     @Query("SELECT * FROM parameter WHERE id = :id")
     fun getFlowById(id: Int): Flow<ParameterEntity>
 
-    @Query("""
+    @Query(
+        """
+        SELECT (
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM parameter
+                    WHERE name = :name
+                    AND (:excludeName IS NULL OR name != :excludeName)
+                ) THEN 1
+                ELSE 0
+            END)
+        """
+    )
+    suspend fun nameExists(name: String, excludeName: String?): Boolean
+
+    @Query(
+        """
         SELECT * FROM parameter
         WHERE 
             searchName LIKE '%' || :name || '%'
         ORDER BY LOWER(name), name
-        """)
+    """
+    )
     fun search(name: String): Flow<List<ParameterEntity>>
 
-    @Query("""
+    @Query(
+        """
         DELETE FROM parameter WHERE id IN (:ids)
-    """)
+    """
+    )
     suspend fun deleteByIds(ids: List<Int>)
 }

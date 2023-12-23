@@ -2,6 +2,7 @@
     <string name="app_name">Home Inventory</string>
     <string name="homes">Homes</string>
     <string name="recents">Recents</string>
+    <string name="parameters">Parameters</string>
 
     <string name="save">Save</string>
 

@@ -34,7 +34,7 @@ fun BottomBarContent(
         listOf(
             NavigationBase.Home,
             NavigationBase.Recents,
-            //NavigationBase.Blank
+            NavigationBase.Parameters
         )
     }
 

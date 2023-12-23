@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.House
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.outlined.CheckBox
 import androidx.compose.material.icons.outlined.House
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material3.Scaffold
@@ -19,6 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.askolds.homeinventory.R
 import com.askolds.homeinventory.featureHome.ui.homeGraph
+import com.askolds.homeinventory.featureParameter.ui.parametersGraph
 import com.askolds.homeinventory.featureThing.ui.thingGraph
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsDefaults
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
@@ -28,6 +31,7 @@ import com.askolds.homeinventory.ui.recents.RecentsScreen
 sealed class NavigationGraph(val route: String) {
     data object Home: NavigationGraph(route = "home")
     data object Thing: NavigationGraph(route = "thing")
+    data object Parameters: NavigationGraph(route = "parameters")
 }
 
 // navigation bar destinations
@@ -49,7 +53,12 @@ sealed class NavigationBase(
         Icons.Filled.Schedule,
         R.string.recents
     )
-    //data object Blank : NavigationBase(route = "blank", Icons.Outlined.CheckBoxOutlineBlank, Icons.Filled.CheckBox, "Crash!")
+    data object Parameters : NavigationBase(
+        route = NavigationGraph.Parameters.route,
+        Icons.Outlined.CheckBox,
+        Icons.Filled.CheckBox,
+        R.string.parameters
+    )
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -79,6 +88,7 @@ fun Navigation(
         ) {
             homeGraph(navController, appBarsObject)
             thingGraph(navController, appBarsObject)
+            parametersGraph(navController, appBarsObject)
             composable(route = NavigationBase.Recents.route) {
                 RecentsScreen(navController)
             }
