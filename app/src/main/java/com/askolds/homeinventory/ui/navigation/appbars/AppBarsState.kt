@@ -2,6 +2,7 @@ package com.askolds.homeinventory.ui.navigation.appbars
 
 import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.animateTo
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -37,6 +38,27 @@ class AppBarsState @Inject constructor(
 
     var canBottomScroll by mutableStateOf(true)
     var canTopScroll by mutableStateOf(true)
+
+    var bottomFABPadding by mutableStateOf(0.dp)
+        private set
+    var bottomFABPaddingPx by mutableFloatStateOf(0f)
+        private set
+    val bottomFABPaddingInt
+        get() = bottomPaddingPx.roundToInt()
+
+    @Composable
+    fun SetBottomFABPadding(padding: Dp) {
+        val localDensity = LocalDensity.current
+        SideEffect {
+            bottomFABPadding = padding
+            bottomFABPaddingPx = with(localDensity) { padding.toPx() }
+        }
+    }
+
+    fun ClearBottomFABPadding() {
+        bottomFABPadding = 0.dp
+        bottomFABPaddingPx = 0f
+    }
 
     @Composable
     fun SetBottomPadding(padding: Dp) {
@@ -128,6 +150,14 @@ class AppBarsState @Inject constructor(
             }
             canTopScroll = !lock
         }
+    }
+
+    @Composable
+    fun getContentPadding(includeFAB: Boolean = false): PaddingValues {
+        return PaddingValues(
+            top = this.topPadding,
+            bottom = this.bottomPadding + (if (includeFAB) this.bottomFABPadding else 0.dp),
+        )
     }
 
     // TODO: Functions for showing, hiding, setting paddings

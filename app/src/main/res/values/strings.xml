@@ -23,6 +23,11 @@
 
 <!--region Thing-->
     <string name="thing_name">Name</string>
+    <string name="all_parameters">All parameters</string>
 <!--endregion Thing-->
 
+<!--region Parameter set-->
+    <string name="create_parameter_set">Create parameter set</string>
+    <string name="edit_parameter_set">Edit parameter set</string>
+<!--endregion Parameter set-->
 </resources>

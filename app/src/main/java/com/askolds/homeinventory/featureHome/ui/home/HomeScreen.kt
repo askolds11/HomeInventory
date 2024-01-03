@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.askolds.homeinventory.featureHome.domain.model.Home
 import com.askolds.homeinventory.featureHome.ui.NavigationHome
-import com.askolds.homeinventory.featureThing.ui.NavigationThing
+import com.askolds.homeinventory.featureThing.ui.NavigationHomeThing
 import com.askolds.homeinventory.featureThing.ui.list.ThingList
 import com.askolds.homeinventory.featureThing.ui.list.ThingListEvent
 import com.askolds.homeinventory.featureThing.ui.list.ThingListState
@@ -50,10 +50,10 @@ fun HomeScreen(
             navController.navigate(route = NavigationHome.Edit.getRoute(viewModel.state.home.id))
         },
         navigateToThing = { homeId, thingId ->
-            navController.navigate(route = NavigationThing.Thing.getRoute(homeId, thingId))
+            navController.navigate(route = NavigationHomeThing.Thing.getRoute(homeId, thingId))
         },
         navigateToCreateThing = { homeId, thingId ->
-            navController.navigate(route = NavigationThing.Create.getRoute(homeId, thingId))
+            navController.navigate(route = NavigationHomeThing.Create.getRoute(homeId, thingId))
         },
         appBarsObject = appBarsObject,
         home = viewModel.state.home,

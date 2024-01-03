@@ -2,41 +2,51 @@ package com.askolds.homeinventory.featureParameter.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.askolds.homeinventory.featureParameter.data.model.ParameterEntity
-import kotlinx.coroutines.flow.Flow
+import com.askolds.homeinventory.featureParameter.data.model.ParameterSetParameterEntity
 
 @Dao
 interface ParameterSetParameterDao {
+    // region Single
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(item: ParameterEntity): Long
+    suspend fun insert(parameterSetParameter: ParameterSetParameterEntity): Long
 
     @Update
-    suspend fun update(parameter: ParameterEntity)
+    suspend fun update(parameterSetParameter: ParameterSetParameterEntity)
+    // endregion Single
+    // region List
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertAll(parameterSetParameterList: Collection<ParameterSetParameterEntity>)
 
-    @Query("""
-        SELECT * FROM parameter
-        ORDER BY LOWER(name), name""")
-    fun getList(): Flow<List<ParameterEntity>>
+    @Query(
+        """
+        DELETE FROM parameter_set_parameter WHERE id IN (:ids)
+        """
+    )
+    suspend fun deleteByIds(ids: Collection<Int>)
 
-    @Query("SELECT * FROM parameter WHERE id = :id")
-    suspend fun getById(id: Int): ParameterEntity?
+    @Query(
+        """
+        DELETE FROM parameter_set_parameter WHERE parameterId IN (:parameterIds)
+        """
+    )
+    suspend fun deleteByParameterIds(parameterIds: Collection<Int>)
+    // endregion List
 
-    @Query("SELECT * FROM parameter WHERE id = :id")
-    fun getFlowById(id: Int): Flow<ParameterEntity>
+    @Query(
+        """
+        SELECT parameterId, id
+        FROM parameter_set_parameter
+        WHERE parameterSetId = :parameterSetId
+        """
+    )
+    fun getIdsBySetId(
+        parameterSetId: Int
+    ): Map<@MapColumn(columnName = "parameterId") Int,
+            @MapColumn(columnName = "id") Int>
 
-    @Query("""
-        SELECT * FROM parameter
-        WHERE 
-            searchName LIKE '%' || :name || '%'
-        ORDER BY LOWER(name), name
-        """)
-    fun search(name: String): Flow<List<ParameterEntity>>
 
-    @Query("""
-        DELETE FROM parameter WHERE id IN (:ids)
-    """)
-    suspend fun deleteByIds(ids: List<Int>)
 }

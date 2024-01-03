@@ -22,7 +22,6 @@ import androidx.navigation.compose.rememberNavController
 import com.askolds.homeinventory.R
 import com.askolds.homeinventory.featureHome.ui.homeGraph
 import com.askolds.homeinventory.featureParameter.ui.parametersGraph
-import com.askolds.homeinventory.featureThing.ui.thingGraph
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsDefaults
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.ui.recents.RecentsScreen
@@ -30,7 +29,6 @@ import com.askolds.homeinventory.ui.recents.RecentsScreen
 // navigation graphs
 sealed class NavigationGraph(val route: String) {
     data object Home: NavigationGraph(route = "home")
-    data object Thing: NavigationGraph(route = "thing")
     data object Parameters: NavigationGraph(route = "parameters")
 }
 
@@ -87,7 +85,7 @@ fun Navigation(
                 .fillMaxSize()
         ) {
             homeGraph(navController, appBarsObject)
-            thingGraph(navController, appBarsObject)
+//            homeThingGraph(navController, appBarsObject)
             parametersGraph(navController, appBarsObject)
             composable(route = NavigationBase.Recents.route) {
                 RecentsScreen(navController)

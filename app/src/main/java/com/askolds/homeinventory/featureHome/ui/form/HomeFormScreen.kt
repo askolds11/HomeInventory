@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.askolds.homeinventory.R
-import com.askolds.homeinventory.featureHome.domain.usecase.validation.ValidateName
+import com.askolds.homeinventory.featureHome.domain.usecase.home.validation.ValidateName
 import com.askolds.homeinventory.featureImage.ui.ImagePickerCard
 import com.askolds.homeinventory.ui.SaveStatus
 import com.askolds.homeinventory.ui.getDrawingPadding

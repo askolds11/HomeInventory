@@ -8,7 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.askolds.homeinventory.featureThing.domain.model.ThingListItem
-import com.askolds.homeinventory.featureThing.domain.usecase.ThingUseCases
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.ThingUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job

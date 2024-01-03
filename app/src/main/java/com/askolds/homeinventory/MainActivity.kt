@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsDefaults
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsState
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
     lateinit var appBarsState: AppBarsState
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
         setContent {

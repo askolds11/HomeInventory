@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.askolds.homeinventory.featureHome.domain.model.Home
-import com.askolds.homeinventory.featureHome.domain.usecase.HomeUseCases
+import com.askolds.homeinventory.featureHome.domain.usecase.home.HomeUseCases
 import com.askolds.homeinventory.featureImage.domain.model.Image
 import com.askolds.homeinventory.featureImage.domain.usecase.ImageUseCases
 import com.askolds.homeinventory.ui.SaveStatus

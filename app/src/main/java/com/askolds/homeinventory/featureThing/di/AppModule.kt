@@ -6,14 +6,15 @@ import com.askolds.homeinventory.featureImage.data.repository.ImageRepository
 import com.askolds.homeinventory.featureThing.data.repository.ThingRepository
 import com.askolds.homeinventory.featureThing.data.repository.ThingRepositoryImpl
 import com.askolds.homeinventory.featureThing.domain.usecase.*
-import com.askolds.homeinventory.featureThing.domain.usecase.Add
-import com.askolds.homeinventory.featureThing.domain.usecase.DeleteList
-import com.askolds.homeinventory.featureThing.domain.usecase.Get
-import com.askolds.homeinventory.featureThing.domain.usecase.GetFlow
-import com.askolds.homeinventory.featureThing.domain.usecase.GetListFlow
-import com.askolds.homeinventory.featureThing.domain.usecase.Search
-import com.askolds.homeinventory.featureThing.domain.usecase.Update
-import com.askolds.homeinventory.featureThing.domain.usecase.validation.ValidateName
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.Add
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.DeleteList
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.Get
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.GetFlow
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.GetListFlow
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.Search
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.ThingUseCases
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.Update
+import com.askolds.homeinventory.featureThing.domain.usecase.thing.validation.ValidateName
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +32,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideThingUseCases(repository: ThingRepository, imageRepository: ImageRepository): ThingUseCases  = ThingUseCases(
+    fun provideThingUseCases(repository: ThingRepository, imageRepository: ImageRepository): ThingUseCases = ThingUseCases(
         get = Get(repository, imageRepository),
         getFlow = GetFlow(repository, imageRepository),
         getListFlow = GetListFlow(repository, imageRepository),

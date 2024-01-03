@@ -7,7 +7,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.askolds.homeinventory.featureHome.domain.model.HomeListItem
-import com.askolds.homeinventory.featureHome.domain.usecase.HomeUseCases
+import com.askolds.homeinventory.featureHome.domain.usecase.home.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn

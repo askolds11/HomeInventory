@@ -13,25 +13,30 @@ class ParameterRepositoryImpl(
     override suspend fun update(parameter: ParameterEntity) {
         dao.update(parameter)
     }
-    override fun getList(): Flow<List<ParameterEntity>> {
+    override fun getFlowList(): Flow<List<ParameterEntity>> {
+        return dao.getFlowList()
+    }
+
+    override suspend fun getList(): List<ParameterEntity> {
         return dao.getList()
     }
-//
-//    override suspend fun getById(id: Int): HomeEntity? {
-//        return dao.getById(id)
-//    }
-//
-//    override fun getFlowById(id: Int): Flow<HomeEntity> {
-//        return dao.getFlowById(id)
-//    }
-//
+
+    //
+    override suspend fun getById(id: Int): ParameterEntity? {
+        return dao.getById(id)
+    }
+
+    override fun getFlowById(id: Int): Flow<ParameterEntity> {
+        return dao.getFlowById(id)
+    }
+
     override suspend fun nameExists(name: String, excludeName: String?): Boolean {
         return dao.nameExists(name, excludeName)
     }
-//
-//    override fun search(name: String): Flow<List<HomeEntity>> {
-//        return dao.search(name)
-//    }
+
+    override fun getFlowListByName(name: String): Flow<List<ParameterEntity>> {
+        return dao.getFlowListByName(name)
+    }
 
     override suspend fun deleteByIds(ids: List<Int>) {
         dao.deleteByIds(ids)

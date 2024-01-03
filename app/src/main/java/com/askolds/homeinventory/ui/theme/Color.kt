@@ -66,3 +66,15 @@ val md_theme_dark_scrim = Color(0xFF000000)
 
 
 val seed = Color(0xFFA3F540)
+
+// Success colors
+val Success = Color(0xFF66BB6A)
+val light_Success = Color(0xFF83DA85)
+val light_onSuccess = Color(0xFF00390E)
+val light_SuccessContainer = Color(0xFF005318)
+val light_onSuccessContainer = Color(0xFF9FF79F)
+val dark_Success = Color(0xFF126D27)
+val dark_onSuccess = Color(0xFFFFFFFF)
+val dark_SuccessContainer = Color(0xFF9FF79F)
+val dark_onSuccessContainer = Color(0xFF002105)
+//

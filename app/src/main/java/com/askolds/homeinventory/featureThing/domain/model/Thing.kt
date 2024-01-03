@@ -1,7 +1,7 @@
 package com.askolds.homeinventory.featureThing.domain.model
 
-import com.askolds.homeinventory.featureThing.data.model.ThingEntity
 import com.askolds.homeinventory.domain.stripAccents
+import com.askolds.homeinventory.featureThing.data.model.ThingEntity
 
 data class Thing(
     val id: Int = 0,

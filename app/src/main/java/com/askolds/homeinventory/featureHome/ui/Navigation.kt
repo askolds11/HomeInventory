@@ -14,6 +14,7 @@ import com.askolds.homeinventory.featureHome.ui.home.HomeScreen
 import com.askolds.homeinventory.featureHome.ui.home.HomeViewModel
 import com.askolds.homeinventory.featureHome.ui.list.HomeListScreen
 import com.askolds.homeinventory.featureHome.ui.list.HomeListViewModel
+import com.askolds.homeinventory.featureThing.ui.homeThingGraph
 import com.askolds.homeinventory.featureThing.ui.list.ThingListViewModel
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.ui.navigation.composables.NavigationGraph
@@ -40,6 +41,8 @@ fun NavGraphBuilder.homeGraph(
 ) {
     val appBarsState = appBarsObject.appBarsState
     navigation(startDestination = NavigationHome.List.route, route = NavigationGraph.Home.route) {
+        homeThingGraph(navController, appBarsObject)
+
         composable(
             route = NavigationHome.List.route,
             enterTransition = { defaultEnterTransition(this) },

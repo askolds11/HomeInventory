@@ -4,14 +4,15 @@ import com.askolds.homeinventory.data.Database
 import com.askolds.homeinventory.featureHome.data.repository.HomeRepository
 import com.askolds.homeinventory.featureHome.data.repository.HomeRepositoryImpl
 import com.askolds.homeinventory.featureHome.domain.usecase.*
-import com.askolds.homeinventory.featureHome.domain.usecase.Add
-import com.askolds.homeinventory.featureHome.domain.usecase.DeleteList
-import com.askolds.homeinventory.featureHome.domain.usecase.Get
-import com.askolds.homeinventory.featureHome.domain.usecase.GetFlow
-import com.askolds.homeinventory.featureHome.domain.usecase.GetListFlow
-import com.askolds.homeinventory.featureHome.domain.usecase.Search
-import com.askolds.homeinventory.featureHome.domain.usecase.Update
-import com.askolds.homeinventory.featureHome.domain.usecase.validation.ValidateName
+import com.askolds.homeinventory.featureHome.domain.usecase.home.Add
+import com.askolds.homeinventory.featureHome.domain.usecase.home.DeleteList
+import com.askolds.homeinventory.featureHome.domain.usecase.home.Get
+import com.askolds.homeinventory.featureHome.domain.usecase.home.GetFlow
+import com.askolds.homeinventory.featureHome.domain.usecase.home.GetListFlow
+import com.askolds.homeinventory.featureHome.domain.usecase.home.HomeUseCases
+import com.askolds.homeinventory.featureHome.domain.usecase.home.Search
+import com.askolds.homeinventory.featureHome.domain.usecase.home.Update
+import com.askolds.homeinventory.featureHome.domain.usecase.home.validation.ValidateName
 import com.askolds.homeinventory.featureImage.data.repository.ImageRepository
 import com.askolds.homeinventory.featureThing.domain.usecase.*
 import dagger.Module
@@ -31,7 +32,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHomeUseCases(repository: HomeRepository, imageRepository: ImageRepository): HomeUseCases  = HomeUseCases(
+    fun provideHomeUseCases(repository: HomeRepository, imageRepository: ImageRepository): HomeUseCases = HomeUseCases(
         getListFlow = GetListFlow(repository, imageRepository),
         get = Get(repository, imageRepository),
         getFlow = GetFlow(repository, imageRepository),

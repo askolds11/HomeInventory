@@ -11,7 +11,10 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -84,6 +87,17 @@ private val DarkColorTheme = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
+class MyColors (
+    val success: Color,
+    val onSuccess: Color,
+    val successContainer: Color,
+    val onSuccessContainer: Color
+)
+
+val LocalMyColors = compositionLocalOf<MyColors> {
+    error("No MyColors provided")
+}
+
 @Composable
 fun HomeInventoryTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -122,9 +136,31 @@ fun HomeInventoryTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    val myColors = if (!darkTheme) {
+        MyColors(
+            success = light_Success,
+            onSuccess = light_onSuccess,
+            successContainer = light_SuccessContainer,
+            onSuccessContainer = light_onSuccessContainer,
+        )
+    } else {
+        MyColors(
+            success = dark_Success,
+            onSuccess = dark_onSuccess,
+            successContainer = dark_SuccessContainer,
+            onSuccessContainer = dark_onSuccessContainer,
+        )
+    }
+
+    CompositionLocalProvider(LocalMyColors provides myColors) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }
+
+val MaterialTheme.customColors: MyColors
+    @Composable
+    get() = LocalMyColors.current

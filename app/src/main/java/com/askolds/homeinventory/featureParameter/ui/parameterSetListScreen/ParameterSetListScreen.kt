@@ -1,120 +1,241 @@
 package com.askolds.homeinventory.featureParameter.ui.parameterSetListScreen
 
-import androidx.compose.foundation.BorderStroke
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.outlined.Hardware
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.askolds.homeinventory.R
-import com.askolds.homeinventory.featureHome.domain.model.HomeListItem
-import com.askolds.homeinventory.featureParameter.domain.model.ParameterListItem
-import com.askolds.homeinventory.featureParameter.ui.parameterList.ParameterList
-import com.askolds.homeinventory.featureParameter.ui.parameterList.ParameterListEvent
-import com.askolds.homeinventory.featureParameter.ui.parameterList.ParameterListState
-import com.askolds.homeinventory.featureParameter.ui.parameterList.ParameterListViewModel
-import com.askolds.homeinventory.featureParameter.ui.parameterSetList.ParameterSetList
-import com.askolds.homeinventory.featureParameter.ui.parameterSetList.ParameterSetListEvent
-import com.askolds.homeinventory.featureParameter.ui.parameterSetList.ParameterSetListState
-import com.askolds.homeinventory.featureParameter.ui.parameterSetList.ParameterSetListViewModel
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarState
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsDefaults
+import com.askolds.homeinventory.featureParameter.domain.model.ParameterSetListItem
+import com.askolds.homeinventory.featureParameter.ui.NavigationParameters
+import com.askolds.homeinventory.featureParameter.ui.listItem.ParameterSetListItemRow
+import com.askolds.homeinventory.ui.DarkLightPreviews
+import com.askolds.homeinventory.ui.PreviewScaffold
+import com.askolds.homeinventory.ui.SearchSelectAppBars
+import com.askolds.homeinventory.ui.SelectCreateDeleteFAB
+import com.askolds.homeinventory.ui.getPreviewAppBarsObject
+import com.askolds.homeinventory.ui.getSelectableClickModifier
 import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsScrollBehavior
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsState
+import com.askolds.homeinventory.ui.rememberCanNavigate
 import com.askolds.homeinventory.ui.theme.HomeInventoryTheme
 
 @Composable
 fun ParameterSetListScreen(
-    viewModel: ParameterSetListScreenViewModel,
-    listViewModel: ParameterSetListViewModel,
+    viewModel: ParameterSetListViewModel,
     navController: NavController,
     appBarsObject: AppBarsObject,
     modifier: Modifier = Modifier
 ) {
-    ParameterSetListScreenContent(
-        parameterListState = listViewModel.state,
-        parameterListEvent = listViewModel::onEvent,
-        navigateToParameterListScreen = {
-            //navController.navigate(route = NavigationThing.Thing.getRoute(homeId, thingId))
-        },
+    val canNavigate = rememberCanNavigate()
+
+    ParameterSetListContent(
+        state = viewModel.state,
+        event = viewModel::onEvent,
         navigateToParameterSet = { parameterSetId ->
-            //navController.navigate(route = NavigationThing.Create.getRoute(homeId, thingId))
+            if (canNavigate)
+                navController.navigate(
+                    route = NavigationParameters.ParameterSetView.getRoute(parameterSetId)
+                )
+        },
+        navigateToParameterListScreen = {
+            if (canNavigate)
+                navController.navigate(route = NavigationParameters.ParameterList.route )
         },
         navigateToCreateParameterSet = {
-            //navController.navigate(route = NavigationThing.Edit.getRoute(viewModel.state.thing.id))
+            if (canNavigate)
+                navController.navigate(route = NavigationParameters.ParameterSetCreate.route)
         },
         appBarsObject = appBarsObject,
-//        thing = viewModel.state.thing,
         modifier = modifier.fillMaxSize(),
     )
 }
 
 @Composable
-private fun ParameterSetListScreenContent(
-    parameterListState: ParameterSetListState,
-    parameterListEvent: (ParameterSetListEvent) -> Unit,
-    navigateToParameterListScreen: () -> Unit,
-    navigateToParameterSet: (parameterId: Int) -> Unit,
+private fun ParameterSetListContent(
+    state: ParameterSetListState,
+    event: (ParameterSetListEvent) -> Unit,
+    navigateToParameterSet: (parameterSetId: Int) -> Unit,
     navigateToCreateParameterSet: () -> Unit,
+    navigateToParameterListScreen: () -> Unit,
     appBarsObject: AppBarsObject,
     modifier: Modifier = Modifier,
 ) {
-    ParameterSetList(
-        parameterListState,
-        parameterListEvent,
-//        navigateToThing,
-//        navigateToCreateThing,
-        appBarsObject,
-        modifier,
-        searchBarTrailingIcon = { }
-    ) {
-//        ThingHeader(imageUri = thing.imageUri, isContainer = thing.isContainer, text = thing.name)
-//        Divider(color = MaterialTheme.colorScheme.outline)
+    // https://medium.com/@theAndroidDeveloper/yet-another-pitfall-in-jetpack-compose-you-must-be-aware-of-225a1d07d033
+    val isAnySelected by remember(state.selectedCount) {
+        derivedStateOf {
+            state.selectedCount > 0
+        }
+    }
+
+    Box(Modifier.fillMaxSize()) {
+        ParameterSetListItems(
+            parameterSetList = state.parameterSetList,
+            navigateToParameterSet = { parameterSetId ->
+                navigateToParameterSet(parameterSetId)
+            },
+            selectParameterSet = { id, selected, boolean ->
+                event(ParameterSetListEvent.SelectItem(id, selected, boolean))
+            },
+            unselectAll = { event(ParameterSetListEvent.UnselectAll) },
+            navigateToParameterListScreen = navigateToParameterListScreen,
+            isAnySelected = isAnySelected,
+            contentPadding = PaddingValues(
+                top = appBarsObject.appBarsState.topPadding,
+                bottom = appBarsObject.appBarsState.bottomPadding,
+            ),
+            modifier = modifier.fillMaxSize(),
+        )
+        SearchSelectAppBars(
+            appBarsObject = appBarsObject,
+            selectedCount = state.selectedCount,
+            isAnySelected = isAnySelected,
+            query = state.query,
+            unselectAll = { event(ParameterSetListEvent.UnselectAll) },
+            searchQueryChanged = { newText: String ->
+                event(ParameterSetListEvent.QueryChanged(newText))
+            }
+        )
+        SelectCreateDeleteFAB(
+            appBarsObject = appBarsObject,
+            isAnySelected = isAnySelected,
+            deleteFABContentDescription = "Delete parameter sets",
+            createFABContentDescription = "Create parameter set",
+            deleteOnClick = { event(ParameterSetListEvent.DeleteSelected) },
+            createOnClick = navigateToCreateParameterSet
+        )
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun ParameterSetListScreenContentPreview() {
+private fun ParameterSetListItems(
+    parameterSetList: List<ParameterSetListItem>,
+    navigateToParameterSet: (parameterSetId: Int) -> Unit,
+    selectParameterSet: (Int, Boolean, Int) -> Unit,
+    unselectAll: () -> Unit,
+    navigateToParameterListScreen: () -> Unit,
+    isAnySelected: Boolean,
+    contentPadding: PaddingValues,
+    modifier: Modifier = Modifier,
+) {
+    BackHandler(
+        enabled = isAnySelected
+    ) {
+        unselectAll()
+    }
+
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize(),
+        contentPadding = PaddingValues(
+            bottom = contentPadding.calculateBottomPadding(),
+            top = contentPadding.calculateTopPadding()
+        ),
+    )  {
+        item {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .clickable {
+                        navigateToParameterListScreen()
+                    }
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                    .fillMaxWidth()
+                    .height(44.dp),
+            ) {
+                Image(
+                    imageVector = Icons.Outlined.List,
+                    contentScale = ContentScale.Crop,
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .aspectRatio(1f)
+                        .padding(8.dp)
+                )
+
+                Text(
+                    stringResource(R.string.all_parameters),
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+            }
+        }
+
+        item {
+            Divider(color = MaterialTheme.colorScheme.primary)
+        }
+
+        itemsIndexed(
+            items = parameterSetList,
+            key = { _, parameterSet -> parameterSet.id }
+        ) { index, parameterSet ->
+            val clickModifier = Modifier.getSelectableClickModifier(
+                isAnySelected = isAnySelected,
+                onLongClick = { selectParameterSet(parameterSet.id, !parameterSet.selected, index) },
+                onClickWhenSelected = { selectParameterSet(parameterSet.id, !parameterSet.selected, index) },
+                onClickWhenNotSelected = {
+                    navigateToParameterSet(parameterSet.id)
+                },
+            )
+            ParameterSetListItemRow(
+                text = parameterSet.name,
+                isSelected = parameterSet.selected,
+                modifier = clickModifier
+            )
+            if (index < parameterSetList.lastIndex) {
+                Divider(
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(start = 12.dp)
+                )
+            }
+        }
+    }
+}
+
+@DarkLightPreviews
+@Composable
+fun ParameterSetListContentPreview() {
     HomeInventoryTheme {
-        val items = (1..5).map { ParameterListItem(it, "Item $it") }
+        val items = (1..5).map { ParameterSetListItem(it, "Item $it") }
         val state = ParameterSetListState(items.toMutableStateList())
 
-        ParameterSetListScreenContent(
-            parameterListState = state,
-            parameterListEvent = { },
-            navigateToParameterListScreen = { },
-            navigateToParameterSet = { },
-            navigateToCreateParameterSet = { },
-            appBarsObject = AppBarsObject(
-                AppBarsState(
-                    AppBarState(0f, 0f, 0f),
-                    AppBarState(0f, 0f, 0f)
-                ),
-                AppBarsDefaults.exitAlwaysScrollBehavior()
+        val appBarsObject = getPreviewAppBarsObject()
+        PreviewScaffold(appBarsObject = appBarsObject) {
+            ParameterSetListContent(
+                state = state,
+                event = { },
+                navigateToParameterListScreen = { },
+                navigateToParameterSet = { },
+                navigateToCreateParameterSet = { },
+                appBarsObject = appBarsObject
             )
-        )
+        }
     }
 }

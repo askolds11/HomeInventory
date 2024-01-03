@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.askolds.homeinventory.R
 import com.askolds.homeinventory.featureThing.domain.model.Thing
-import com.askolds.homeinventory.featureThing.ui.NavigationThing
+import com.askolds.homeinventory.featureThing.ui.NavigationHomeThing
 import com.askolds.homeinventory.featureThing.ui.list.ThingList
 import com.askolds.homeinventory.featureThing.ui.list.ThingListEvent
 import com.askolds.homeinventory.featureThing.ui.list.ThingListState
@@ -47,13 +47,13 @@ fun ThingScreen(
         thingListState = listViewModel.state,
         thingListEvent = listViewModel::onEvent,
         navigateToThing = { homeId, thingId ->
-            navController.navigate(route = NavigationThing.Thing.getRoute(homeId, thingId))
+            navController.navigate(route = NavigationHomeThing.Thing.getRoute(homeId, thingId))
         },
         navigateToCreateThing = { homeId, thingId ->
-            navController.navigate(route = NavigationThing.Create.getRoute(homeId, thingId))
+            navController.navigate(route = NavigationHomeThing.Create.getRoute(homeId, thingId))
         },
         navigateToEditThing = {
-            navController.navigate(route = NavigationThing.Edit.getRoute(viewModel.state.thing.id))
+            navController.navigate(route = NavigationHomeThing.Edit.getRoute(viewModel.state.thing.id))
         },
         appBarsObject = appBarsObject,
         thing = viewModel.state.thing,

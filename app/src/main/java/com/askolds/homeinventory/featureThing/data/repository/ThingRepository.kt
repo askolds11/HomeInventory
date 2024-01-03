@@ -1,6 +1,5 @@
 package com.askolds.homeinventory.featureThing.data.repository
 
-import com.askolds.homeinventory.featureHome.data.model.HomeEntity
 import com.askolds.homeinventory.featureThing.data.model.ThingEntity
 import kotlinx.coroutines.flow.Flow
 

@@ -4,16 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.askolds.homeinventory.featureParameter.domain.model.ParameterListItem
-import com.askolds.homeinventory.featureParameter.domain.usecase.ParameterUseCases
-import com.askolds.homeinventory.featureThing.domain.usecase.ThingUseCases
+import com.askolds.homeinventory.featureParameter.domain.usecase.parameter.ParameterUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -22,49 +19,23 @@ import javax.inject.Inject
 @HiltViewModel
 class ParameterListViewModel @Inject constructor(
     private val parameterUseCases: ParameterUseCases,
-    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     var state by mutableStateOf(ParameterListState())
         private set
-//    private val homeId = savedStateHandle.get<Int>("homeId")!!
-//    private val thingId = savedStateHandle.get<Int>("thingId")
-//    private val isHomeScreen = thingId == null // how to get list - by home id or parent (thing) id
 
     private var getListJob: Job? = null
-//    private var searchJob: Job? = null
+    private var searchJob: Job? = null
 
     init {
         viewModelScope.launch {
-//            getState().await()
-//            if (state.query.isBlank()) {
+            if (state.query.isBlank()) {
                 state = state.copy(query = "")
                 getList()
-//            } else {
-//                search(state.query)
-//            }
+            } else {
+                search(state.query)
+            }
         }
     }
-
-//    private fun getState(): Deferred<Unit> {
-//        state = state.copy(
-//            homeId = homeId,
-//            thingId = thingId,
-//        )
-//        return viewModelScope.async {
-//            return@async if (isHomeScreen) {
-//                state = state.copy(
-//                    isContainer = true
-//                )
-//            } else {
-//                thingUseCases.getFlow(thingId!!)
-//                    .onEach {
-//                        state = state.copy(isContainer = it.isContainer)
-//                    }
-//                    .launchIn(viewModelScope)
-//                Unit
-//            }
-//        }
-//    }
 
     fun onEvent(event: ParameterListEvent) {
         when (event) {
@@ -81,21 +52,21 @@ class ParameterListViewModel @Inject constructor(
      */
     private fun search(query: String) {
         state = state.copy(query = query)
-//        if (query.isNotBlank()) {
-//            // Cancel existing searches
-//            searchJob?.cancel()
-//            getListJob?.cancel()
-//            searchJob = viewModelScope.launch {
-//                delay(200) // don't search for 200ms so typing more cancels jobs
-//                thingUseCases.search(homeId, thingId, query)
-//                    .onEach {
-//                        state = state.copy(thingList = it.toMutableStateList())
-//                    }
-//                    .launchIn(viewModelScope)
-//            }
-//        } else {
-//            getList()
-//        }
+        if (query.isNotBlank()) {
+            // Cancel existing searches
+            searchJob?.cancel()
+            getListJob?.cancel()
+            searchJob = viewModelScope.launch {
+                delay(200) // don't search for 200ms so typing more cancels jobs
+                parameterUseCases.search(query)
+                    .onEach {
+                        state = state.copy(parameterList = it.toMutableStateList())
+                    }
+                    .launchIn(viewModelScope)
+            }
+        } else {
+            getList()
+        }
     }
 
     /**
@@ -147,8 +118,8 @@ class ParameterListViewModel @Inject constructor(
      */
     private fun getList() {
         if (getListJob?.isActive != true) {
-//            searchJob?.cancel()
-            getListJob = parameterUseCases.getListFlow(/*homeId, thingId*/)
+            searchJob?.cancel()
+            getListJob = parameterUseCases.getListFlow()
                 .onEach {
                     state = state.copy(parameterList = it.toMutableStateList())
                 }

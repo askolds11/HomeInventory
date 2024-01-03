@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0d9b68b202d24909f4d22141e915b9d1",
+    "identityHash": "22a9569ccbcb3c01c601c381197cd43b",
     "entities": [
       {
         "tableName": "home",
@@ -266,7 +266,7 @@
       },
       {
         "tableName": "parameter_set",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `searchName` TEXT NOT NULL, `imageId` INTEGER, FOREIGN KEY(`imageId`) REFERENCES `image`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `searchName` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -285,12 +285,6 @@
             "columnName": "searchName",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "imageId",
-            "columnName": "imageId",
-            "affinity": "INTEGER",
-            "notNull": false
           }
         ],
         "primaryKey": {
@@ -308,30 +302,9 @@
             ],
             "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_parameter_set_searchName` ON `${TABLE_NAME}` (`searchName`)"
-          },
-          {
-            "name": "index_parameter_set_imageId",
-            "unique": false,
-            "columnNames": [
-              "imageId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_parameter_set_imageId` ON `${TABLE_NAME}` (`imageId`)"
           }
         ],
-        "foreignKeys": [
-          {
-            "table": "image",
-            "onDelete": "SET NULL",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "imageId"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "parameter_set_parameter",
@@ -406,12 +379,218 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "thing_parameter_parameter_set",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `value` TEXT NOT NULL, `thingId` INTEGER NOT NULL, `parameterId` INTEGER NOT NULL, `parameterSetParameterId` INTEGER, `thingParameterSetId` INTEGER, FOREIGN KEY(`thingId`) REFERENCES `thing`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`parameterId`) REFERENCES `parameter`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`parameterSetParameterId`) REFERENCES `parameter_set_parameter`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`thingParameterSetId`) REFERENCES `thing_parameter_set`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thingId",
+            "columnName": "thingId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parameterId",
+            "columnName": "parameterId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parameterSetParameterId",
+            "columnName": "parameterSetParameterId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "thingParameterSetId",
+            "columnName": "thingParameterSetId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_thing_parameter_parameter_set_thingId",
+            "unique": false,
+            "columnNames": [
+              "thingId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_thing_parameter_parameter_set_thingId` ON `${TABLE_NAME}` (`thingId`)"
+          },
+          {
+            "name": "index_thing_parameter_parameter_set_parameterId",
+            "unique": false,
+            "columnNames": [
+              "parameterId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_thing_parameter_parameter_set_parameterId` ON `${TABLE_NAME}` (`parameterId`)"
+          },
+          {
+            "name": "index_thing_parameter_parameter_set_parameterSetParameterId",
+            "unique": false,
+            "columnNames": [
+              "parameterSetParameterId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_thing_parameter_parameter_set_parameterSetParameterId` ON `${TABLE_NAME}` (`parameterSetParameterId`)"
+          },
+          {
+            "name": "index_thing_parameter_parameter_set_thingParameterSetId",
+            "unique": false,
+            "columnNames": [
+              "thingParameterSetId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_thing_parameter_parameter_set_thingParameterSetId` ON `${TABLE_NAME}` (`thingParameterSetId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "thing",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "thingId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "parameter",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "parameterId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "parameter_set_parameter",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "parameterSetParameterId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "thing_parameter_set",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "thingParameterSetId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "thing_parameter_set",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `thingId` INTEGER NOT NULL, `parameterSetId` INTEGER NOT NULL, FOREIGN KEY(`thingId`) REFERENCES `thing`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`parameterSetId`) REFERENCES `parameter_set`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thingId",
+            "columnName": "thingId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parameterSetId",
+            "columnName": "parameterSetId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_thing_parameter_set_thingId",
+            "unique": false,
+            "columnNames": [
+              "thingId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_thing_parameter_set_thingId` ON `${TABLE_NAME}` (`thingId`)"
+          },
+          {
+            "name": "index_thing_parameter_set_parameterSetId",
+            "unique": false,
+            "columnNames": [
+              "parameterSetId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_thing_parameter_set_parameterSetId` ON `${TABLE_NAME}` (`parameterSetId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "thing",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "thingId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "parameter_set",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "parameterSetId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0d9b68b202d24909f4d22141e915b9d1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22a9569ccbcb3c01c601c381197cd43b')"
     ]
   }
 }

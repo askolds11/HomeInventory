@@ -25,7 +25,7 @@ class Compress(
                 BitmapFactory.decodeStream(inputStream)
             }
             // compress
-            val compressFormat =
+            @Suppress("DEPRECATION") val compressFormat =
                 if(Build.VERSION.SDK_INT >= 30)
                     Bitmap.CompressFormat.WEBP_LOSSY
                 else

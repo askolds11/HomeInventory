@@ -24,5 +24,11 @@
 
 <!--region Thing-->
     <string name="thing_name">Nosaukums</string>
+    <string name="all_parameters">Visi parametri</string>
 <!--endregion Thing-->
+
+<!--region Parameter set-->
+    <string name="create_parameter_set">Izveidot parametru kopu</string>
+    <string name="edit_parameter_set">Labot parametru kopu</string>
+<!--endregion Parameter set-->
 </resources>

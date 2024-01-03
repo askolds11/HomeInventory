@@ -8,9 +8,10 @@ data class ParameterListItem(
     val selected: Boolean = false,
 )
 
-internal fun ParameterEntity.toParameterListItem(): ParameterListItem {
+internal fun ParameterEntity.toParameterListItem(selected: Boolean = false): ParameterListItem {
     return ParameterListItem(
         id = id,
         name = name,
+        selected = selected
     )
 }
