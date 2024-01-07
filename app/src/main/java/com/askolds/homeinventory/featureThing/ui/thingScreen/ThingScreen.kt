@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,6 +29,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,7 +58,11 @@ import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.core.ui.rememberCanNavigate
 import com.askolds.homeinventory.core.ui.theme.HomeInventoryTheme
 import com.askolds.homeinventory.featureImageNavigation.ui.imageNavOverlay.ImageNavOverlay
-import com.askolds.homeinventory.featureImageNavigation.ui.imageNavOverlay.ImageNavOverlayPreview
+import com.askolds.homeinventory.featureImageNavigation.ui.imageNavOverlay.ImageNavOverlayEdit
+import com.askolds.homeinventory.featureImageNavigation.ui.imageNavOverlay.ImageNavOverlayEvent
+import com.askolds.homeinventory.featureImageNavigation.ui.imageNavOverlay.ImageNavOverlayState
+import com.askolds.homeinventory.featureImageNavigation.ui.imageNavOverlay.ImageNavOverlayViewModel
+import com.askolds.homeinventory.featureImageNavigation.ui.imageNavOverlay.things.ImageNavOverlayThings
 import com.askolds.homeinventory.featureParameter.domain.model.ThingParameter
 import com.askolds.homeinventory.featureThing.domain.model.Thing
 import com.askolds.homeinventory.featureThing.domain.model.ThingListItem
@@ -65,11 +71,14 @@ import com.askolds.homeinventory.featureThing.ui.list.ThingListEvent
 import com.askolds.homeinventory.featureThing.ui.list.ThingListState
 import com.askolds.homeinventory.featureThing.ui.list.ThingListViewModel
 import com.askolds.homeinventory.featureThing.ui.list.thingItems
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 fun ThingScreen(
     viewModel: ThingViewModel,
     listViewModel: ThingListViewModel,
+    imageNavOverlayViewModel: ImageNavOverlayViewModel,
     navController: NavController,
     appBarsObject: AppBarsObject,
     modifier: Modifier = Modifier
@@ -86,6 +95,10 @@ fun ThingScreen(
         thingState = viewModel.state,
         thingListState = listViewModel.state,
         thingListEvent = listViewModel::onEvent,
+        imageNavOverlayState = imageNavOverlayViewModel.state,
+        imageNavOverlayEvent = imageNavOverlayViewModel::onEvent,
+        imageNavOverlayFlow = imageNavOverlayViewModel.getListFlow,
+        imageNavOverlayThingsFlow = imageNavOverlayViewModel.getThingsListFlow,
         navigateToThing = { homeId, thingId ->
             if (canNavigate.value)
                 navController.navigate(route = NavigationHomeThing.Thing.getRoute(homeId, thingId))
@@ -108,6 +121,10 @@ private fun ThingContent(
     thingState: ThingState,
     thingListState: ThingListState,
     thingListEvent: (ThingListEvent) -> Unit,
+    imageNavOverlayState: ImageNavOverlayState,
+    imageNavOverlayEvent: (ImageNavOverlayEvent) -> Unit,
+    imageNavOverlayFlow: SharedFlow<Unit>,
+    imageNavOverlayThingsFlow: SharedFlow<Unit>,
     navigateToThing: (homeId: Int, thingId: Int) -> Unit,
     navigateToCreateThing: (homeId: Int, thingId: Int?) -> Unit,
     navigateToEditThing: () -> Unit,
@@ -121,21 +138,25 @@ private fun ThingContent(
     }
 
     var imageNavOverlay by remember { mutableStateOf(false) }
+    var imageNavOverlayEdit by remember { mutableStateOf(false) }
+    var imageNavOverlayThings by remember { mutableStateOf(false) }
     
     Box(Modifier.fillMaxSize()) {
-        ThingListItems(
-            thingState = thingState,
-            thingList = thingListState.thingList,
-            imageOnClick = { if (thingState.thing.value.imageId != null) imageNavOverlay = !imageNavOverlay },
-            navigateToThing = navigateToThing,
-            selectThing = { id: Int, selected: Boolean, index: Int ->
-                thingListEvent(ThingListEvent.SelectItem(id, selected, index))
-            },
-            unselectAll = { thingListEvent(ThingListEvent.DeleteSelected) },
-            isAnySelected = isAnySelected,
-            contentPadding = appBarsObject.appBarsState.getContentPadding(),
-            modifier = modifier,
-        )
+        if (!imageNavOverlayThings) {
+            ThingListItems(
+                thingState = thingState,
+                thingList = thingListState.thingList,
+                imageOnClick = { if (thingState.thing.value.imageId != null) imageNavOverlay = !imageNavOverlay },
+                navigateToThing = navigateToThing,
+                selectThing = { id: Int, selected: Boolean, index: Int ->
+                    thingListEvent(ThingListEvent.SelectItem(id, selected, index))
+                },
+                unselectAll = { thingListEvent(ThingListEvent.DeleteSelected) },
+                isAnySelected = isAnySelected,
+                contentPadding = appBarsObject.appBarsState.getContentPadding(),
+                modifier = modifier,
+            )
+        }
         SearchSelectAppBars(
             appBarsObject = appBarsObject,
             selectedCount = thingListState.selectedCount.value,
@@ -171,9 +192,57 @@ private fun ThingContent(
         )
         if (imageNavOverlay) {
             ImageNavOverlay(
+                imageNavOverlayState,
+                imageNavOverlayEvent,
+                imageNavOverlayFlow,
+                imageUri = thingState.thing.value.imageUri!!,
                 appBarsObject = appBarsObject,
-                closeOverlay = { imageNavOverlay = false }
+                navigateToThing,
+                closeOverlay = {
+                    imageNavOverlayEdit = false
+                    imageNavOverlay = false
+                    imageNavOverlayThings = false
+                },
+                openEditOverlay = {
+                    imageNavOverlayEdit = true
+                    imageNavOverlay = false
+                    imageNavOverlayThings = false
+                }
             )
+        } else if (imageNavOverlayEdit) {
+            ImageNavOverlayEdit(
+                imageNavOverlayState,
+                imageNavOverlayEvent,
+                imageNavOverlayFlow,
+                imageUri = thingState.thing.value.imageUri!!,
+                appBarsObject = appBarsObject,
+                closeEditOverlay = {
+                    imageNavOverlayEdit = false
+                    imageNavOverlay = true
+                    imageNavOverlayThings = false
+                },
+                openThingsOverlay = {
+                    imageNavOverlayEdit = false
+                    imageNavOverlay = false
+                    imageNavOverlayThings = true
+                }
+            )
+        } else if (imageNavOverlayThings) {
+            ImageNavOverlayThings(
+                imageNavOverlayState,
+                imageNavOverlayEvent,
+                imageNavOverlayThingsFlow,
+                appBarsObject = appBarsObject,
+                closeThingsOverlay = {
+                    imageNavOverlayEdit = true
+                    imageNavOverlay = false
+                    imageNavOverlayThings = false
+                }
+            )
+        } else {
+            LaunchedEffect(Unit) {
+                appBarsObject.appBarsState.showBottomBar(false)
+            }
         }
     }
 }
@@ -323,6 +392,7 @@ private fun ThingHeader(
                 RoundedCornerShape(8.dp)
             )
             .weight(1f)
+            .aspectRatio(3f / 4f)
             .clickable { imageOnClick() }
 
         if (imageUri == null) {
@@ -473,6 +543,10 @@ private fun ThingContentPreview() {
                 thingState = thingState,
                 thingListState = thingListState,
                 thingListEvent = {},
+                imageNavOverlayState = ImageNavOverlayState(),
+                imageNavOverlayEvent = { },
+                imageNavOverlayFlow = MutableSharedFlow(),
+                imageNavOverlayThingsFlow = MutableSharedFlow(),
                 appBarsObject = appBarsObject,
                 navigateToThing = { _, _ -> },
                 navigateToCreateThing = { _, _ -> },

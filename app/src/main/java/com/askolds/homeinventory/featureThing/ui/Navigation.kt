@@ -19,6 +19,7 @@ import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.core.ui.navigation.composables.NavigationGraph
 import com.askolds.homeinventory.core.ui.navigation.defaultEnterTransition
 import com.askolds.homeinventory.core.ui.navigation.defaultExitTransition
+import com.askolds.homeinventory.featureImageNavigation.ui.imageNavOverlay.ImageNavOverlayViewModel
 
 sealed class NavigationHomeThing(val route: String, val args: String? = null) {
     data object Create : NavigationHomeThing(route = "${NavigationGraph.Home.route}/thing/create", args = "/{homeId}?parentId={parentId}") {
@@ -116,6 +117,7 @@ fun NavGraphBuilder.homeThingGraph(
         ThingScreen(
             hiltViewModel<ThingViewModel>(),
             hiltViewModel<ThingListViewModel>(),
+            hiltViewModel<ImageNavOverlayViewModel>(),
             navController,
             appBarsObject
         )

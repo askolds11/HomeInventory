@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -208,6 +209,7 @@ private fun HomeHeader(
                 RoundedCornerShape(8.dp)
             )
             .weight(1f)
+            .aspectRatio(3f/4f)
         if (imageUri == null) {
             Image(
                 imageVector = Icons.Outlined.Home,

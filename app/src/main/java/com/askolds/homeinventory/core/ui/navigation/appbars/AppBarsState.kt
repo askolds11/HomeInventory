@@ -16,8 +16,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -95,6 +97,15 @@ class AppBarsState @Inject constructor(
             }
             canBottomScroll = !lock
         }
+    }
+    suspend fun showBottomBar(lock: Boolean) {
+        withContext (Dispatchers.Main) {
+            val state = bottomBarState
+            AnimationState(initialValue = state.heightOffset).animateTo(
+                0f,
+            ) { state.heightOffset = value }
+        }
+        canBottomScroll = !lock
     }
 
     @Composable

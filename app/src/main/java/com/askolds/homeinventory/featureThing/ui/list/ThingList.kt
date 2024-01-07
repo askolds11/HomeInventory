@@ -37,7 +37,8 @@ fun LazyListScope.thingItems(
     thingList: List<ThingListItem>,
     isAnySelected: Boolean,
     selectItem: (id: Int, selected: Boolean, index: Int) -> Unit,
-    navigateToThing: (homeId: Int, thingId: Int) -> Unit
+    navigateToThing: (homeId: Int, thingId: Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     itemsIndexed(items = thingList, key = { _, thing -> thing.id }) { index, thing ->
         val clickModifier = Modifier.getSelectableClickModifier(
@@ -51,7 +52,7 @@ fun LazyListScope.thingItems(
             text = thing.name,
             isContainer = thing.isContainer,
             isSelected = thing.selected,
-            modifier = clickModifier
+            modifier = modifier.then(clickModifier)
         )
         if (index < thingList.lastIndex) {
             Divider(color = MaterialTheme.colorScheme.outline)

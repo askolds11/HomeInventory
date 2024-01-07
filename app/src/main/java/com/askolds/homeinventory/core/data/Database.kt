@@ -6,6 +6,8 @@ import com.askolds.homeinventory.featureHome.data.dao.HomeDao
 import com.askolds.homeinventory.featureHome.data.model.HomeEntity
 import com.askolds.homeinventory.featureImage.data.dao.ImageDao
 import com.askolds.homeinventory.featureImage.data.model.ImageEntity
+import com.askolds.homeinventory.featureImageNavigation.data.dao.ImageThingNavigationDao
+import com.askolds.homeinventory.featureImageNavigation.data.model.ImageThingNavigationEntity
 import com.askolds.homeinventory.featureParameter.data.dao.ParameterDao
 import com.askolds.homeinventory.featureParameter.data.dao.ParameterSetDao
 import com.askolds.homeinventory.featureParameter.data.dao.ParameterSetParameterDao
@@ -29,6 +31,7 @@ import com.askolds.homeinventory.featureThing.data.model.ThingEntity
         ParameterSetParameterEntity::class,
         ThingParameterParameterSetEntity::class,
         ThingParameterSetEntity::class,
+        ImageThingNavigationEntity::class
     ],
     version = 1,
     exportSchema = true
@@ -42,6 +45,7 @@ abstract class Database : RoomDatabase() {
     abstract fun parameterSetParameterDao(): ParameterSetParameterDao
     abstract fun thingParameterParameterSetDao(): ThingParameterParameterSetDao
     abstract fun thingParameterSetDao(): ThingParameterSetDao
+    abstract fun imageThingNavigationDao(): ImageThingNavigationDao
 
     companion object {
         const val DATABASE_NAME = "home_inventory_db"
