@@ -39,7 +39,7 @@ interface ThingParameterParameterSetDao {
 
     @Query(
         """
-        SELECT thing_parameter_set.*, parameter_set.*, thing_parameter_parameter_set.*, parameter.*
+        SELECT parameter_set.*, thing_parameter_parameter_set.*, parameter.*
         FROM thing_parameter_parameter_set
         INNER JOIN thing_parameter_set ON thing_parameter_set.id = thing_parameter_parameter_set.thingParameterSetId
         INNER JOIN parameter_set ON parameter_set.id = thing_parameter_set.parameterSetId
