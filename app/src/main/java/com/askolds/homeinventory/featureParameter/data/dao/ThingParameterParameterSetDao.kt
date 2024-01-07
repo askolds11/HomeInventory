@@ -30,8 +30,7 @@ interface ThingParameterParameterSetDao {
         """
         SELECT thing_parameter_parameter_set.*, parameter.*
         FROM thing_parameter_parameter_set
-        INNER JOIN parameter_set_parameter ON parameter_set_parameter.id = thing_parameter_parameter_set.parameterSetParameterId
-        INNER JOIN parameter ON parameter.id = parameter_set_parameter.parameterId
+        INNER JOIN parameter ON parameter.id = thing_parameter_parameter_set.parameterId
         WHERE thing_parameter_parameter_set.thingId = :thingId
             AND thing_parameter_parameter_set.thingParameterSetId IS NULL
         ORDER BY LOWER(parameter.name), parameter.name

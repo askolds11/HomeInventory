@@ -1,6 +1,6 @@
 package com.askolds.homeinventory.featureThing.domain.usecase.thing
 
-import com.askolds.homeinventory.domain.stripAccents
+import com.askolds.homeinventory.core.domain.stripAccents
 import com.askolds.homeinventory.featureThing.data.repository.ThingRepository
 import com.askolds.homeinventory.featureThing.domain.model.ThingListItem
 import com.askolds.homeinventory.featureThing.domain.model.toThingListItem

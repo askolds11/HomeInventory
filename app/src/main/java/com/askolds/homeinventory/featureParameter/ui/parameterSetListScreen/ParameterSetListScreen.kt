@@ -36,15 +36,15 @@ import com.askolds.homeinventory.R
 import com.askolds.homeinventory.featureParameter.domain.model.ParameterSetListItem
 import com.askolds.homeinventory.featureParameter.ui.NavigationParameters
 import com.askolds.homeinventory.featureParameter.ui.listItem.ParameterSetListItemRow
-import com.askolds.homeinventory.ui.DarkLightPreviews
-import com.askolds.homeinventory.ui.PreviewScaffold
-import com.askolds.homeinventory.ui.SearchSelectAppBars
-import com.askolds.homeinventory.ui.SelectCreateDeleteFAB
-import com.askolds.homeinventory.ui.getPreviewAppBarsObject
-import com.askolds.homeinventory.ui.getSelectableClickModifier
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
-import com.askolds.homeinventory.ui.rememberCanNavigate
-import com.askolds.homeinventory.ui.theme.HomeInventoryTheme
+import com.askolds.homeinventory.core.ui.DarkLightPreviews
+import com.askolds.homeinventory.core.ui.PreviewScaffold
+import com.askolds.homeinventory.core.ui.SearchSelectAppBars
+import com.askolds.homeinventory.core.ui.SelectCreateDeleteFAB
+import com.askolds.homeinventory.core.ui.getPreviewAppBarsObject
+import com.askolds.homeinventory.core.ui.getSelectableClickModifier
+import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
+import com.askolds.homeinventory.core.ui.rememberCanNavigate
+import com.askolds.homeinventory.core.ui.theme.HomeInventoryTheme
 
 @Composable
 fun ParameterSetListScreen(
@@ -59,17 +59,17 @@ fun ParameterSetListScreen(
         state = viewModel.state,
         event = viewModel::onEvent,
         navigateToParameterSet = { parameterSetId ->
-            if (canNavigate)
+            if (canNavigate.value)
                 navController.navigate(
                     route = NavigationParameters.ParameterSetView.getRoute(parameterSetId)
                 )
         },
         navigateToParameterListScreen = {
-            if (canNavigate)
+            if (canNavigate.value)
                 navController.navigate(route = NavigationParameters.ParameterList.route )
         },
         navigateToCreateParameterSet = {
-            if (canNavigate)
+            if (canNavigate.value)
                 navController.navigate(route = NavigationParameters.ParameterSetCreate.route)
         },
         appBarsObject = appBarsObject,
@@ -106,10 +106,7 @@ private fun ParameterSetListContent(
             unselectAll = { event(ParameterSetListEvent.UnselectAll) },
             navigateToParameterListScreen = navigateToParameterListScreen,
             isAnySelected = isAnySelected,
-            contentPadding = PaddingValues(
-                top = appBarsObject.appBarsState.topPadding,
-                bottom = appBarsObject.appBarsState.bottomPadding,
-            ),
+            contentPadding = appBarsObject.appBarsState.getContentPadding(),
             modifier = modifier.fillMaxSize(),
         )
         SearchSelectAppBars(
@@ -120,13 +117,14 @@ private fun ParameterSetListContent(
             unselectAll = { event(ParameterSetListEvent.UnselectAll) },
             searchQueryChanged = { newText: String ->
                 event(ParameterSetListEvent.QueryChanged(newText))
-            }
+            },
+            placeholderText = stringResource(R.string.search_parameter_sets_placeholder)
         )
         SelectCreateDeleteFAB(
             appBarsObject = appBarsObject,
             isAnySelected = isAnySelected,
-            deleteFABContentDescription = "Delete parameter sets",
-            createFABContentDescription = "Create parameter set",
+            deleteFABContentDescription = stringResource(R.string.delete_parameter_sets),
+            createFABContentDescription = stringResource(R.string.create_parameter_set),
             deleteOnClick = { event(ParameterSetListEvent.DeleteSelected) },
             createOnClick = navigateToCreateParameterSet
         )

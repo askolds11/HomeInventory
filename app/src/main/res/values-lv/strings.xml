@@ -6,29 +6,69 @@
 
     <string name="save">Saglabāt</string>
 
-<!--region Generic validation-->
-<!--    Lietot Laravel, kad iespējams un loģiski-->
-<!--    https://github.com/Laravel-Lang-->
-<!--    https://github.com/Laravel-Lang/lang/blob/main/locales/lv/php.json-->
+    <!--region Generic validation-->
+    <!--    Lietot Laravel, kad iespējams un loģiski-->
+    <!--    https://github.com/Laravel-Lang-->
+    <!--    https://github.com/Laravel-Lang/lang/blob/main/locales/lv/php.json-->
     <string name="validation_required">%s lauks ir obligāts.</string>
-<!--endregion Generic validation-->
+    <string name="validation_alreadyexists">Vērtība jau eksistē!</string>
+    <!--endregion Generic validation-->
 
-<!--region Generic field names-->
+    <!--region Generic field names-->
+    <!--endregion Generic field names-->
 
-<!--endregion Generic field names-->
+    <!--region Home-->
+    <string name="home_name">Mājas nosaukums</string>
+    <string name="delete_homes">Dzēst mājas</string>
+    <string name="create_home">Izveidot māju</string>
+    <string name="edit_home">Labot māju</string>
+    <string name="search_homes_placeholder">Meklēt mājas...</string>
+    <string name="search_in_home_placeholder">Meklēt mājā...</string>
+    <!--endregion Home-->
 
-<!--region Home-->
-    <string name="home_name">Nosaukums</string>
-    <string name="home_validation_alreadyexists">Vērtība jau eksistē!</string>
-<!--endregion Home-->
+    <!--region Thing-->
+    <string name="thing_name">Lietas nosaukums</string>
+    <string name="delete_things">Dzēst lietas</string>
+    <string name="create_thing">Izveidot lietu</string>
+    <string name="edit_thing">Labot lietu</string>
+    <string name="search_in_thing_placeholder">Meklēt lietā...</string>
+    <string name="choose_thing_parameters">Izvēlēties lietas parametrus</string>
+    <string name="choose_thing_parameter_sets">Izvēlēties lietas parametru kopas</string>
+    <string name="enter_parameter_value_placeholder">Ieraksti vērtību...</string>
+    <string name="container">Konteiners</string>
+    <string name="thing">Lieta</string>
+    <!--endregion Thing-->
 
-<!--region Thing-->
-    <string name="thing_name">Nosaukums</string>
-    <string name="all_parameters">Visi parametri</string>
-<!--endregion Thing-->
-
-<!--region Parameter set-->
+    <!--region Parameter set-->
+    <string name="parameter_set_name">Parametru kopas nosaukums</string>
     <string name="create_parameter_set">Izveidot parametru kopu</string>
     <string name="edit_parameter_set">Labot parametru kopu</string>
-<!--endregion Parameter set-->
+    <string name="parameter_sets">Parametru kopas</string>
+
+    <string name="delete_parameter_sets">Dzēst parametru kopas</string>
+    <string name="search_parameter_sets_placeholder">Meklēt parametru kopas...</string>
+
+    <string name="all_parameters">Visi parametri</string>
+    <!--endregion Parameter set-->
+
+    <!-- region Parameters -->
+    <string name="parameter_name">Parametra nosaukums</string>
+    <string name="edit_parameter">Labot parametru</string>
+    <string name="create_parameter">Izveidot parametru</string>
+    <string name="search_parameters_placeholder">Meklēt parametrus...</string>
+    <string name="delete_parameters">Dzēst parametrus</string>
+    <!-- endregion Parameters -->
+
+    <!-- region General-->
+    <string name="search_placeholder">Meklēt...</string>
+    <string name="unselect_all">Atcelt izvēli</string>
+    <string name="navigate_back">Navigēt atpakaļ</string>
+
+    <string name="take_picture">Uzņemt attēlu</string>
+    <string name="pick_image_from_gallery">Izvēlēties attēlu no galerijas</string>
+    <string name="delete_picture">Dzēst attēlu</string>
+
+    <string name="expand">Izplest %s</string>
+    <string name="collapse">Savilkt %s</string>
+    <!-- endregion General-->
 </resources>

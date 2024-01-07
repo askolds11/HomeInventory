@@ -44,7 +44,7 @@ import com.askolds.homeinventory.featureThing.data.model.ThingEntity
 data class ThingParameterParameterSetEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val value: String,
+    val value: String?,
     val thingId: Int,
     val parameterId: Int,
     val parameterSetParameterId: Int?,

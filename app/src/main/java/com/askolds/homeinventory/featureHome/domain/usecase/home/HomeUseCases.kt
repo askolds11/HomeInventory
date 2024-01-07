@@ -4,7 +4,6 @@ import com.askolds.homeinventory.featureHome.domain.usecase.home.validation.Vali
 
 data class HomeUseCases(
     val getListFlow: GetListFlow,
-    val get: Get,
     val getFlow: GetFlow,
     val add: Add,
     val update: Update,

@@ -6,28 +6,68 @@
 
     <string name="save">Save</string>
 
-<!--region Generic validation-->
-<!--    Use Laravel ones when possible and logical-->
-<!--    https://github.com/Laravel-Lang-->
-<!--    https://github.com/Laravel-Lang/lang/blob/main/locales/en/php.json-->
+    <!--region Generic validation-->
+    <!--    Use Laravel ones when possible and logical-->
+    <!--    https://github.com/Laravel-Lang-->
+    <!--    https://github.com/Laravel-Lang/lang/blob/main/locales/en/php.json-->
     <string name="validation_required">The %s field is required.</string>
-<!--endregion Generic validation-->
+    <string name="validation_alreadyexists">This value already exists!</string>
+    <!--endregion Generic validation-->
 
-<!--region Generic field names-->
-<!--endregion Generic field names-->
+    <!--region Generic field names-->
+    <!--endregion Generic field names-->
 
-<!--region Home-->
-    <string name="home_name">Name</string>
-    <string name="home_validation_alreadyexists">This value already exists!</string>
-<!--endregion Home-->
+    <!--region Home-->
+    <string name="home_name">Home name</string>
+    <string name="delete_homes">Delete homes</string>
+    <string name="create_home">Create home</string>
+    <string name="edit_home">Edit home</string>
+    <string name="search_homes_placeholder">Search homes...</string>
+    <string name="search_in_home_placeholder">Search in home...</string>
+    <!--endregion Home-->
 
-<!--region Thing-->
-    <string name="thing_name">Name</string>
-    <string name="all_parameters">All parameters</string>
-<!--endregion Thing-->
+    <!--region Thing-->
+    <string name="thing_name">Thing name</string>
+    <string name="delete_things">Delete things</string>
+    <string name="create_thing">Create thing</string>
+    <string name="edit_thing">Edit thing</string>
+    <string name="search_in_thing_placeholder">Search in thing...</string>
+    <string name="choose_thing_parameters">Choose thing parameters</string>
+    <string name="choose_thing_parameter_sets">Choose thing parameter sets</string>
+    <string name="enter_parameter_value_placeholder">Enter value...</string>
+    <string name="container">Container</string>
+    <string name="thing">Thing</string>
+    <!--endregion Thing-->
 
-<!--region Parameter set-->
+    <!--region Parameter set-->
+    <string name="parameter_set_name">Parameter set name</string>
     <string name="create_parameter_set">Create parameter set</string>
     <string name="edit_parameter_set">Edit parameter set</string>
-<!--endregion Parameter set-->
+    <string name="parameter_sets">Parameter sets</string>
+    <string name="delete_parameter_sets">Delete parameter sets</string>
+    <string name="search_parameter_sets_placeholder">Search parameter sets...</string>
+
+    <string name="all_parameters">All parameters</string>
+    <!--endregion Parameter set-->
+
+    <!-- region Parameters -->
+    <string name="parameter_name">Parameter name</string>
+    <string name="edit_parameter">Edit parameter</string>
+    <string name="create_parameter">Create parameter</string>
+    <string name="search_parameters_placeholder">Search parameters...</string>
+    <string name="delete_parameters">Delete parameters</string>
+    <!-- endregion Parameters -->
+
+    <!-- region General-->
+    <string name="search_placeholder">Search...</string>
+    <string name="unselect_all">Unselect all</string>
+    <string name="navigate_back">Navigate back</string>
+
+    <string name="take_picture">Take picture</string>
+    <string name="pick_image_from_gallery">Pick image from gallery</string>
+    <string name="delete_picture">Delete picture</string>
+
+    <string name="expand">Expand %s</string>
+    <string name="collapse">Collapse %s</string>
+    <!--endregion General-->
 </resources>

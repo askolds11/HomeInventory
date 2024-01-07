@@ -5,7 +5,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.askolds.homeinventory.featureParameter.domain.model.ParameterListItem
 import com.askolds.homeinventory.featureParameter.domain.model.ParameterSet
 import com.askolds.homeinventory.featureParameter.domain.usecase.parameterSet.validation.ValidateName
-import com.askolds.homeinventory.ui.SaveStatus
+import com.askolds.homeinventory.core.ui.SaveStatus
 
 data class ParameterSetFormState (
     val isEditMode: Boolean = false,

@@ -1,6 +1,6 @@
 package com.askolds.homeinventory.featureParameter.domain.usecase.parameter
 
-import com.askolds.homeinventory.domain.toSearchable
+import com.askolds.homeinventory.core.domain.toSearchable
 import com.askolds.homeinventory.featureParameter.data.repository.ParameterRepository
 import com.askolds.homeinventory.featureParameter.domain.model.ParameterListItem
 import com.askolds.homeinventory.featureParameter.domain.model.toParameterListItem

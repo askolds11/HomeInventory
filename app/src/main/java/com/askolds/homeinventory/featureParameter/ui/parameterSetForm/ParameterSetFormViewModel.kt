@@ -12,7 +12,7 @@ import com.askolds.homeinventory.featureParameter.domain.model.ParameterSet
 import com.askolds.homeinventory.featureParameter.domain.usecase.parameter.ParameterUseCases
 import com.askolds.homeinventory.featureParameter.domain.usecase.parameterSet.ParameterSetUseCases
 import com.askolds.homeinventory.featureParameter.domain.usecase.parameterSetParameter.ParameterSetParameterUseCases
-import com.askolds.homeinventory.ui.SaveStatus
+import com.askolds.homeinventory.core.ui.SaveStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

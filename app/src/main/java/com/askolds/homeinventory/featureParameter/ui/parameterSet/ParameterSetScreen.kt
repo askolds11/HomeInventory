@@ -17,19 +17,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.askolds.homeinventory.R
 import com.askolds.homeinventory.featureParameter.domain.model.ParameterListItem
 import com.askolds.homeinventory.featureParameter.domain.model.ParameterSet
 import com.askolds.homeinventory.featureParameter.ui.NavigationParameters
 import com.askolds.homeinventory.featureParameter.ui.listItem.ParameterListItemRow
-import com.askolds.homeinventory.ui.DarkLightPreviews
-import com.askolds.homeinventory.ui.PreviewScaffold
-import com.askolds.homeinventory.ui.getPreviewAppBarsObject
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
-import com.askolds.homeinventory.ui.navigation.composables.TopAppBar
-import com.askolds.homeinventory.ui.rememberCanNavigate
-import com.askolds.homeinventory.ui.theme.HomeInventoryTheme
+import com.askolds.homeinventory.core.ui.DarkLightPreviews
+import com.askolds.homeinventory.core.ui.PreviewScaffold
+import com.askolds.homeinventory.core.ui.getPreviewAppBarsObject
+import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
+import com.askolds.homeinventory.core.ui.navigation.composables.TopAppBar
+import com.askolds.homeinventory.core.ui.rememberCanNavigate
+import com.askolds.homeinventory.core.ui.theme.HomeInventoryTheme
 
 @Composable
 fun ParameterSetScreen(
@@ -41,17 +43,17 @@ fun ParameterSetScreen(
     ParameterSetContent(
         state = viewModel.state,
         navigateToEditParameterSet = {
-            if (canNavigate)
+            if (canNavigate.value)
                 navController.navigate(
                     route = NavigationParameters.ParameterSetEdit.getRoute(viewModel.state.parameterSet.id)
                 )
         },
         navigateBack = {
-            if (canNavigate)
+            if (canNavigate.value)
                 navController.navigateUp()
         },
         navigateToParameter = {parameterId ->
-            if (canNavigate)
+            if (canNavigate.value)
                 navController.navigate(route = NavigationParameters.ParameterView.getRoute(parameterId))
         },
         appBarsObject = appBarsObject,
@@ -106,7 +108,7 @@ private fun ParameterSetTopAppBar(
             ) {
                 Icon(
                     Icons.Filled.ArrowBack,
-                    "Navigate back",
+                    stringResource(R.string.navigate_back),
                 )
             }
         },
@@ -120,11 +122,11 @@ private fun ParameterSetTopAppBar(
             ) {
                 Icon(
                     Icons.Filled.Edit,
-                    "Edit parameter set",
+                    stringResource(R.string.edit_parameter_set),
                 )
             }
         },
-        appBarsObject = appBarsObject
+        appBarsObject = appBarsObject,
     )
 }
 

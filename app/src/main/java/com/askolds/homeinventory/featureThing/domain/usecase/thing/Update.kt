@@ -16,7 +16,7 @@ class Update (
         withContext(Dispatchers.IO) {
             val oldThing = repository.getById(thing.id)
             // image changed
-            val imageId = if (oldThing?.imageId != thing.imageId) {
+            val imageId = if (oldThing?.imageId != image?.id) {
                 // old image exists, delete
                 if (oldThing?.imageId != null)
                     imageRepository.deleteById(oldThing.imageId)

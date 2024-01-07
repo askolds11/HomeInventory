@@ -5,7 +5,7 @@ import com.askolds.homeinventory.featureParameter.data.model.ThingParameterParam
 
 data class ThingParameter(
     val id: Int = 0,
-    val value: String,
+    val value: String?,
     val parameterId: Int,
     val parameterSetId: Int?,
     val parameterSetParameterId: Int?,
@@ -15,7 +15,7 @@ data class ThingParameter(
     internal fun toEntity(thingId: Int): ThingParameterParameterSetEntity {
         return ThingParameterParameterSetEntity(
             id = id,
-            value = value.trim(),
+            value = value?.trim()?.ifBlank { null },
             thingId = thingId,
             parameterId = parameterId,
             parameterSetParameterId = parameterSetParameterId,

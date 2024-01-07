@@ -9,6 +9,10 @@ android {
     namespace = "com.askolds.homeinventory"
     compileSdk = 34
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.askolds.homeinventory"
         minSdk = 24

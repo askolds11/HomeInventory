@@ -9,11 +9,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsDefaults
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsState
-import com.askolds.homeinventory.ui.navigation.composables.Navigation
-import com.askolds.homeinventory.ui.theme.HomeInventoryTheme
+import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsDefaults
+import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
+import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsState
+import com.askolds.homeinventory.core.ui.navigation.composables.Navigation
+import com.askolds.homeinventory.core.ui.theme.HomeInventoryTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

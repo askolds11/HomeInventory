@@ -8,17 +8,17 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.askolds.homeinventory.featureThing.ui.form.ThingFormScreen
-import com.askolds.homeinventory.featureThing.ui.form.ThingFormViewModel
-import com.askolds.homeinventory.featureThing.ui.form.parameterSets.ThingParameterSetsScreen
-import com.askolds.homeinventory.featureThing.ui.form.parameters.ThingParametersScreen
+import com.askolds.homeinventory.featureThing.ui.formScreen.ThingFormScreen
+import com.askolds.homeinventory.featureThing.ui.formScreen.ThingFormViewModel
+import com.askolds.homeinventory.featureThing.ui.formScreen.parameterSets.ThingParameterSetsScreen
+import com.askolds.homeinventory.featureThing.ui.formScreen.parameters.ThingParametersScreen
 import com.askolds.homeinventory.featureThing.ui.list.ThingListViewModel
-import com.askolds.homeinventory.featureThing.ui.thing.ThingScreen
-import com.askolds.homeinventory.featureThing.ui.thing.ThingViewModel
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
-import com.askolds.homeinventory.ui.navigation.composables.NavigationGraph
-import com.askolds.homeinventory.ui.navigation.defaultEnterTransition
-import com.askolds.homeinventory.ui.navigation.defaultExitTransition
+import com.askolds.homeinventory.featureThing.ui.thingScreen.ThingScreen
+import com.askolds.homeinventory.featureThing.ui.thingScreen.ThingViewModel
+import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
+import com.askolds.homeinventory.core.ui.navigation.composables.NavigationGraph
+import com.askolds.homeinventory.core.ui.navigation.defaultEnterTransition
+import com.askolds.homeinventory.core.ui.navigation.defaultExitTransition
 
 sealed class NavigationHomeThing(val route: String, val args: String? = null) {
     data object Create : NavigationHomeThing(route = "${NavigationGraph.Home.route}/thing/create", args = "/{homeId}?parentId={parentId}") {
@@ -59,7 +59,7 @@ fun NavGraphBuilder.homeThingGraph(
             }
             val formViewModel = hiltViewModel<ThingFormViewModel>(parentEntry)
 
-            appBarsState.ShowAppBars(lockTop = true, lockBottom = true)
+            appBarsState.ShowAppBars(lockTop = true, lockBottom = false)
             ThingFormScreen(formViewModel, navController, appBarsObject)
         }
         composable(
@@ -75,7 +75,7 @@ fun NavGraphBuilder.homeThingGraph(
             }
             val formViewModel = hiltViewModel<ThingFormViewModel>(parentEntry)
 
-            appBarsState.ShowAppBars(lockTop = true, lockBottom = true)
+            appBarsState.ShowAppBars(lockTop = true, lockBottom = false)
             ThingFormScreen(formViewModel, navController, appBarsObject)
         }
         composable(

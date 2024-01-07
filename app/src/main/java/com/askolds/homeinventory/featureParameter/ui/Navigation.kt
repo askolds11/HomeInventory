@@ -7,22 +7,22 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.askolds.homeinventory.featureParameter.ui.parameter.ParameterScreen
-import com.askolds.homeinventory.featureParameter.ui.parameter.ParameterViewModel
-import com.askolds.homeinventory.featureParameter.ui.parameterForm.ParameterFormScreen
-import com.askolds.homeinventory.featureParameter.ui.parameterForm.ParameterFormViewModel
-import com.askolds.homeinventory.featureParameter.ui.parameterList.ParameterListScreen
-import com.askolds.homeinventory.featureParameter.ui.parameterList.ParameterListViewModel
+import com.askolds.homeinventory.featureParameter.ui.parameterScreen.ParameterScreen
+import com.askolds.homeinventory.featureParameter.ui.parameterScreen.ParameterViewModel
+import com.askolds.homeinventory.featureParameter.ui.parameterFormScreen.ParameterFormScreen
+import com.askolds.homeinventory.featureParameter.ui.parameterFormScreen.ParameterFormViewModel
+import com.askolds.homeinventory.featureParameter.ui.parameterListScreen.ParameterListScreen
+import com.askolds.homeinventory.featureParameter.ui.parameterListScreen.ParameterListViewModel
 import com.askolds.homeinventory.featureParameter.ui.parameterSet.ParameterSetScreen
 import com.askolds.homeinventory.featureParameter.ui.parameterSet.ParameterSetViewModel
 import com.askolds.homeinventory.featureParameter.ui.parameterSetForm.ParameterSetFormScreen
 import com.askolds.homeinventory.featureParameter.ui.parameterSetForm.ParameterSetFormViewModel
 import com.askolds.homeinventory.featureParameter.ui.parameterSetListScreen.ParameterSetListScreen
 import com.askolds.homeinventory.featureParameter.ui.parameterSetListScreen.ParameterSetListViewModel
-import com.askolds.homeinventory.ui.navigation.appbars.AppBarsObject
-import com.askolds.homeinventory.ui.navigation.composables.NavigationGraph
-import com.askolds.homeinventory.ui.navigation.defaultEnterTransition
-import com.askolds.homeinventory.ui.navigation.defaultExitTransition
+import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
+import com.askolds.homeinventory.core.ui.navigation.composables.NavigationGraph
+import com.askolds.homeinventory.core.ui.navigation.defaultEnterTransition
+import com.askolds.homeinventory.core.ui.navigation.defaultExitTransition
 
 sealed class NavigationParameters(val route: String, val args: String? = null) {
     // region Parameter
@@ -101,7 +101,7 @@ fun NavGraphBuilder.parametersGraph(
             enterTransition = { defaultEnterTransition(this) },
             exitTransition = { defaultExitTransition(this) }
         ) {
-            appBarsState.ShowAppBars(lockTop = true, lockBottom = true)
+            appBarsState.ShowAppBars(lockTop = false, lockBottom = false)
             ParameterListScreen(
                 viewModel = hiltViewModel<ParameterListViewModel>(),
                 navController = navController,

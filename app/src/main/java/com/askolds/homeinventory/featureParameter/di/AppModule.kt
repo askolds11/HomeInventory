@@ -1,6 +1,6 @@
 package com.askolds.homeinventory.featureParameter.di
 
-import com.askolds.homeinventory.data.Database
+import com.askolds.homeinventory.core.data.Database
 import com.askolds.homeinventory.featureParameter.data.repository.ParameterRepository
 import com.askolds.homeinventory.featureParameter.data.repository.ParameterRepositoryImpl
 import com.askolds.homeinventory.featureParameter.data.repository.ParameterSetParameterRepository

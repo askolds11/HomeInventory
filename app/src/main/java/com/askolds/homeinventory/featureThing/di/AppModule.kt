@@ -1,6 +1,6 @@
 package com.askolds.homeinventory.featureThing.di
 
-import com.askolds.homeinventory.data.Database
+import com.askolds.homeinventory.core.data.Database
 import com.askolds.homeinventory.featureHome.domain.usecase.*
 import com.askolds.homeinventory.featureImage.data.repository.ImageRepository
 import com.askolds.homeinventory.featureThing.data.repository.ThingRepository

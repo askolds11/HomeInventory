@@ -1,7 +1,7 @@
 package com.askolds.homeinventory.featureImage.di
 
 import android.content.Context
-import com.askolds.homeinventory.data.Database
+import com.askolds.homeinventory.core.data.Database
 import com.askolds.homeinventory.featureImage.data.repository.ImageRepository
 import com.askolds.homeinventory.featureImage.data.repository.ImageRepositoryImpl
 import com.askolds.homeinventory.featureImage.domain.usecase.Compress

@@ -1,6 +1,6 @@
 package com.askolds.homeinventory.featureHome.domain.usecase.home
 
-import com.askolds.homeinventory.domain.toSearchable
+import com.askolds.homeinventory.core.domain.toSearchable
 import com.askolds.homeinventory.featureHome.data.repository.HomeRepository
 import com.askolds.homeinventory.featureHome.domain.model.HomeListItem
 import com.askolds.homeinventory.featureHome.domain.model.toHomeListItem

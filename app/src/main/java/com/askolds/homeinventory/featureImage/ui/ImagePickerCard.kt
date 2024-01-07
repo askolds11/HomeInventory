@@ -24,8 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.askolds.homeinventory.R
 
 @Composable
 fun ImagePickerCard(
@@ -83,19 +85,19 @@ fun ImagePickerCard(
                     )
                     val items = listOf(
                         IconItem(
-                            { /* TODO */ },
+                            {  },
                             Icons.Outlined.CameraAlt,
-                            "Take picture"
+                            stringResource(R.string.take_picture)
                         ),
                         IconItem(
                             { galleryLauncher.launch("image/*") },
                             Icons.Outlined.Image,
-                            "Pick image from gallery"
+                            stringResource(R.string.pick_image_from_gallery)
                         ),
                         IconItem(
                             { imageAction(null) },
                             Icons.Outlined.Delete,
-                            "Delete image"
+                            stringResource(R.string.delete_picture)
                         ),
                     )
                     items.forEach {item ->

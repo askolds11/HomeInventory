@@ -1,6 +1,6 @@
 package com.askolds.homeinventory.featureHome.domain.model
 
-import com.askolds.homeinventory.domain.stripAccents
+import com.askolds.homeinventory.core.domain.stripAccents
 import com.askolds.homeinventory.featureHome.data.model.HomeEntity
 import com.askolds.homeinventory.featureImage.domain.model.Image
 
