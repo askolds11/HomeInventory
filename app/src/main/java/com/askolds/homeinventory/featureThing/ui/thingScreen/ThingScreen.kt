@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -535,6 +536,68 @@ private fun ThingContentPreview() {
         }
         val thingListState = ThingListState(
             thingList = thingList.toMutableStateList()
+        )
+
+        val appBarsObject = getPreviewAppBarsObject()
+        PreviewScaffold(appBarsObject = appBarsObject) {
+            ThingContent(
+                thingState = thingState,
+                thingListState = thingListState,
+                thingListEvent = {},
+                imageNavOverlayState = ImageNavOverlayState(),
+                imageNavOverlayEvent = { },
+                imageNavOverlayFlow = MutableSharedFlow(),
+                imageNavOverlayThingsFlow = MutableSharedFlow(),
+                appBarsObject = appBarsObject,
+                navigateToThing = { _, _ -> },
+                navigateToCreateThing = { _, _ -> },
+                navigateToEditThing = { },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
+}
+
+@DarkLightPreviews
+@Composable
+private fun ThingContentSelectedPreview() {
+    HomeInventoryTheme {
+        val thing = Thing(
+            name = "My Thing",
+            isContainer = false,
+            parentId = null,
+            homeId = 0,
+            imageId = null
+        )
+        val thingStatee = remember { mutableStateOf(thing) }
+        val thingParameters = (1..2).map {
+            ThingParameter(
+                id = it,
+                value = "Value $it",
+                parameterId = it,
+                parameterSetId = null,
+                parameterSetParameterId = null,
+                thingParameterSetId = null,
+                parameterName = "Parameter $it"
+            )
+        }
+        val thingState = ThingState(
+            thing = thingStatee,
+            thingParameters = thingParameters.toMutableStateList()
+        )
+
+        val thingList = (1..5).map {
+            ThingListItem(
+                id = it,
+                homeId = 0,
+                name = "Thing $it",
+                isContainer = false,
+                selected = true,
+            )
+        }
+        val thingListState = ThingListState(
+            thingList = thingList.toMutableStateList(),
+            selectedCount = remember { mutableIntStateOf(5) }
         )
 
         val appBarsObject = getPreviewAppBarsObject()

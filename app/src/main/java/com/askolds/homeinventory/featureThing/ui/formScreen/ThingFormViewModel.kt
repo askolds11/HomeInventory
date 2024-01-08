@@ -435,7 +435,6 @@ class ThingFormViewModel @Inject constructor(
                         it.toThingParameterSet()
                     }
                 )
-                delay(2000)
                 state.saveStatus.value = SaveStatus.Saved
             }
         }

@@ -3,17 +3,24 @@ package com.askolds.homeinventory.featureImage.ui
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CameraAlt
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -23,11 +30,16 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.askolds.homeinventory.R
+import com.askolds.homeinventory.core.ui.DarkLightComponentPreviews
+import com.askolds.homeinventory.core.ui.DarkLightPreviews
+import com.askolds.homeinventory.core.ui.theme.HomeInventoryTheme
 
 @Composable
 fun ImagePickerCard(
@@ -116,5 +128,33 @@ fun ImagePickerCard(
                 }
             }
         }
+    }
+}
+
+@DarkLightComponentPreviews
+@Composable
+fun ImagePickerCardPreview() {
+    HomeInventoryTheme {
+        val imageModifier = Modifier
+            .aspectRatio(3f / 4f)
+            .border(
+                BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
+                RoundedCornerShape(8.dp)
+            )
+        
+        ImagePickerCard(
+            imageText = "",
+            image = {
+                Image(
+                    imageVector = Icons.Outlined.Home,
+                    contentScale = ContentScale.Crop,
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+                    modifier = imageModifier.padding(8.dp)
+                )
+            },
+            imageAction = { },
+            Modifier.height(128.dp)
+        )
     }
 }

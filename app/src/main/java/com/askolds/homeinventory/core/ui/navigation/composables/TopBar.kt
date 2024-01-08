@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
@@ -27,9 +29,13 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.askolds.homeinventory.R
+import com.askolds.homeinventory.core.ui.DarkLightComponentPreviews
+import com.askolds.homeinventory.core.ui.DarkLightPreviews
+import com.askolds.homeinventory.core.ui.getPreviewAppBarsObject
 import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
 import com.askolds.homeinventory.core.ui.navigation.appbars.CustomSearchBar
 import com.askolds.homeinventory.core.ui.navigation.appbars.CustomTopAppBar
+import com.askolds.homeinventory.core.ui.theme.HomeInventoryTheme
 
 /**
  * General search bar
@@ -130,4 +136,45 @@ fun TopAppBar(
         actions = actions,
         appBarsObject = appBarsObject
     )
+}
+
+@DarkLightComponentPreviews
+@Composable
+fun SearchBarPreview() {
+    HomeInventoryTheme {
+        SearchBar(
+            "", {}, {}, getPreviewAppBarsObject()
+        )
+    }
+}
+
+@DarkLightComponentPreviews
+@Composable
+fun TopAppBarPreview() {
+    HomeInventoryTheme {
+        TopAppBar(
+            {Text("Selected")},
+            {IconButton(
+                onClick = {},
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+            ) {
+                Icon(
+                    Icons.Filled.ArrowBack,
+                    stringResource(R.string.navigate_back),
+                )
+            }},
+            { IconButton(
+                onClick = {},
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+            ) {
+                Icon(
+                    Icons.Filled.Edit,
+                    stringResource(R.string.edit_parameter),
+                )
+            }},
+            getPreviewAppBarsObject()
+        )
+    }
 }

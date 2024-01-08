@@ -33,6 +33,20 @@ import com.askolds.homeinventory.core.ui.navigation.composables.BottomBar
 )
 annotation class DarkLightPreviews
 
+@Preview(
+    name = "Dark mode",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    device = Devices.PIXEL_4_XL
+)
+@Preview(
+    name = "Light mode",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    device = Devices.PIXEL_4_XL
+)
+annotation class DarkLightComponentPreviews
+
 @Composable
 fun getPreviewAppBarsObject(): AppBarsObject {
     val appBarsObject = AppBarsObject(

@@ -8,20 +8,17 @@ import androidx.navigation.NavController
 import com.askolds.homeinventory.R
 
 @Composable
-fun RecentsScreen(
+fun SearchScreen(
     navController: NavController,
-    modifier: Modifier = Modifier
 ) {
-    RecentsContent(
-        modifier = modifier
-    )
+    SearchContent()
 }
 
 @Composable
-fun RecentsContent(
+fun SearchContent(
     modifier: Modifier = Modifier
 ) {
     Text(
-        text = stringResource(R.string.app_name) + "Recents"
+        text = stringResource(R.string.search)
     )
 }

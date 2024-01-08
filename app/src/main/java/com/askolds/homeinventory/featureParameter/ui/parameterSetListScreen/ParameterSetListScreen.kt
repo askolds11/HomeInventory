@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -223,6 +224,27 @@ fun ParameterSetListContentPreview() {
     HomeInventoryTheme {
         val items = (1..5).map { ParameterSetListItem(it, "Item $it") }
         val state = ParameterSetListState(items.toMutableStateList())
+
+        val appBarsObject = getPreviewAppBarsObject()
+        PreviewScaffold(appBarsObject = appBarsObject) {
+            ParameterSetListContent(
+                state = state,
+                event = { },
+                navigateToParameterListScreen = { },
+                navigateToParameterSet = { },
+                navigateToCreateParameterSet = { },
+                appBarsObject = appBarsObject
+            )
+        }
+    }
+}
+
+@DarkLightPreviews
+@Composable
+fun ParameterSetListContentSelectedPreview() {
+    HomeInventoryTheme {
+        val items = (1..5).map { ParameterSetListItem(it, "Item $it", selected = true) }
+        val state = ParameterSetListState(items.toMutableStateList(), selectedCount = 5)
 
         val appBarsObject = getPreviewAppBarsObject()
         PreviewScaffold(appBarsObject = appBarsObject) {

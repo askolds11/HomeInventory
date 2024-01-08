@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.House
-import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.CheckBox
 import androidx.compose.material.icons.outlined.House
-import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.askolds.homeinventory.R
 import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsDefaults
 import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
-import com.askolds.homeinventory.core.ui.recents.RecentsScreen
+import com.askolds.homeinventory.core.ui.recents.SearchScreen
 import com.askolds.homeinventory.featureHome.ui.homeGraph
 import com.askolds.homeinventory.featureParameter.ui.parametersGraph
 
@@ -45,11 +45,11 @@ sealed class NavigationBase(
         Icons.Filled.House,
         R.string.homes
     )
-    data object Recents : NavigationBase(
+    data object Search : NavigationBase(
         route = "recent",
-        Icons.Outlined.Schedule,
-        Icons.Filled.Schedule,
-        R.string.recents
+        Icons.Outlined.Search,
+        Icons.Filled.Search,
+        R.string.search
     )
     data object Parameters : NavigationBase(
         route = NavigationGraph.Parameters.route,
@@ -86,8 +86,8 @@ fun Navigation(
             homeGraph(navController, appBarsObject)
 //            homeThingGraph(navController, appBarsObject)
             parametersGraph(navController, appBarsObject)
-            composable(route = NavigationBase.Recents.route) {
-                RecentsScreen(navController)
+            composable(route = NavigationBase.Search.route) {
+                SearchScreen(navController)
             }
         }
     }

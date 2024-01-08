@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
@@ -239,9 +240,9 @@ private fun HomeHeader(
 
 @DarkLightPreviews
 @Composable
-private fun ThingContentPreview() {
+private fun HomeContentPreview() {
     HomeInventoryTheme {
-        val home = Home(name = "My Thing")
+        val home = Home(name = "My Home")
         val homeStatee = remember { mutableStateOf(home) }
 
         val homeState = HomeState(
@@ -258,6 +259,47 @@ private fun ThingContentPreview() {
         }
         val thingListState = ThingListState(
             thingList = thingList.toMutableStateList()
+        )
+
+        val appBarsObject = getPreviewAppBarsObject()
+        PreviewScaffold(appBarsObject = appBarsObject) {
+            HomeContent(
+                homeState = homeState,
+                thingListState = thingListState,
+                thingListEvent = {},
+                appBarsObject = appBarsObject,
+                navigateToThing = {_, _ -> },
+                navigateToCreateThing = {_, _ -> },
+                navigateToEditHome = { },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
+}
+
+@DarkLightPreviews
+@Composable
+private fun HomeContentSelectedPreview() {
+    HomeInventoryTheme {
+        val home = Home(name = "My Home")
+        val homeStatee = remember { mutableStateOf(home) }
+
+        val homeState = HomeState(
+            home = homeStatee,
+        )
+
+        val thingList = (1..5).map {
+            ThingListItem(
+                id = it,
+                homeId = 0,
+                name = "Thing $it",
+                isContainer = false,
+                selected = true,
+            )
+        }
+        val thingListState = ThingListState(
+            thingList = thingList.toMutableStateList(),
+            selectedCount = remember { mutableIntStateOf(5) },
         )
 
         val appBarsObject = getPreviewAppBarsObject()

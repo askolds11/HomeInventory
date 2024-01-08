@@ -1,11 +1,14 @@
 package com.askolds.homeinventory.core.ui.fab
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -14,10 +17,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.askolds.homeinventory.core.ui.SaveStatus
 import com.askolds.homeinventory.core.ui.getDisabledColor
 import com.askolds.homeinventory.core.ui.navigation.appbars.AppBarsObject
+import com.askolds.homeinventory.core.ui.theme.HomeInventoryTheme
 import com.askolds.homeinventory.core.ui.theme.customColors
 
 @Composable
@@ -76,5 +82,32 @@ fun BoxScope.SaveFAB(
                 }
             }
         }
+    }
+}
+
+@Preview(
+    name = "Dark mode",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    device = Devices.PIXEL_4_XL
+)
+@Preview(
+    name = "Light mode",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    device = Devices.PIXEL_4_XL
+)
+@Composable
+fun SaveFABPreview() {
+    HomeInventoryTheme {
+        FloatingActionButton(
+            onClick = { },
+            containerColor = MaterialTheme.customColors.successContainer,
+            contentColor = MaterialTheme.customColors.onSuccessContainer,
+            content = { Icon(
+                Icons.Filled.Done,
+                "Save thing"
+            ) },
+        )
     }
 }

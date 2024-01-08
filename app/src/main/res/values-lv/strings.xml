@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Mājas inventārs</string>
     <string name="homes">Mājas</string>
-    <string name="recents">Nesenie</string>
+    <string name="search">Meklēt</string>
     <string name="parameters">Parametri</string>
 
     <string name="save">Saglabāt</string>

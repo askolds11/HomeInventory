@@ -98,7 +98,6 @@ class ParameterFormViewModel @Inject constructor(
                     parameterUseCases.update(parameter)
                 }
 
-                delay(2000)
                 state = state.copy(saveStatus = SaveStatus.Saved)
                 saveEnabled = true
             }
